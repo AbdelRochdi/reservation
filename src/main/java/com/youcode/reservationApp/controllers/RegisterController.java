@@ -16,6 +16,7 @@ public class RegisterController {
 	//controller method to process the registration form
 	@RequestMapping("/processForm")
 	public String processFrom() {
+		
 		return "index";
 	}
 	
