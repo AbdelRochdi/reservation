@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.header{
+	background-color: #909bde;
+	display: flex;
+	justify-content: space-between;
+	padding: 1rem;
+}
+
+.header ul{
+	list-style-type: none;
+	display: flex;
+}
+
+.header ul li{
+	margin: 0 1rem; 
+}
+
+.header ul li a{
+	text-decoration: none;
+	color: black;
+}
+
+.header ul li a:hover{
+	color: white;
+}
+
+.add_user{
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+	margin: 3rem auto 0;
+}
+
+.add_user input, select{
+	margin: 0.5rem 0;
+	border-radius: 0.2rem;
+	height: 1.5rem;
+	padding: 0 0.2rem;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 0.4rem;
+}
+
+table{
+	margin: 2rem auto 0;
+}
+
+th{
+	background: #909bde;
+}
+
+

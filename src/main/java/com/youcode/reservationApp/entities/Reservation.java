@@ -1,14 +1,22 @@
 package com.youcode.reservationApp.entities;
 // default package
+
 // Generated Mar 12, 2021, 10:08:26 AM by Hibernate Tools 5.4.27.Final
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 public class Reservation implements java.io.Serializable {
@@ -17,15 +25,21 @@ public class Reservation implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "reservation_id")
 	private Long reservationId;
-	private long userId;
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "user_id")
+	private Users user;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "date")
 	private Date date;
+	@Column(name = "state", insertable = false)
 	private String state;
 
 	public Reservation() {
 	}
 
-	public Reservation(long userId, Date date, String state) {
-		this.userId = userId;
+	public Reservation(Users user, Date date, String state) {
+		this.user = user;
 		this.date = date;
 		this.state = state;
 	}
@@ -38,12 +52,13 @@ public class Reservation implements java.io.Serializable {
 		this.reservationId = reservationId;
 	}
 
-	public long getUserId() {
-		return this.userId;
+
+	public Users getUser() {
+		return user;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUser(Users user) {
+		this.user = user;
 	}
 
 	public Date getDate() {

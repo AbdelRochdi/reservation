@@ -1,21 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Register</title>
-</head>
-<body>
+<%@ include file="header.jsp"%>
 
 <h2>Fill the form to register</h2>
 
-<form action="processForm" method="get">
+<form:form action="processForm" modelAttribute = "users"  method="post" class="add_user">
 
-<input type="text" name="name" placeholder="Name"/>
-<input type="submit" />
+<form:input type="text" path="firstName" placeholder="Prenom"/>
+<form:input type="text" path="lastName" placeholder="Nom"/>
+<form:input type="text" path="email" placeholder="Email"/>
+<form:input type="hidden" path="role" placeholder="Email" value="apprenant"/>
+<form:input type="hidden" path="state" placeholder="Email" value="inactive"/>
+<form:input type="password" path="password" placeholder="Mot de passe"/>
+<input type="password" placeholder="Confirmez le mot de passe"/>
+<input type="submit" value ="S'inscrire" />
 
-</form>
+</form:form>
 
 
 </body>

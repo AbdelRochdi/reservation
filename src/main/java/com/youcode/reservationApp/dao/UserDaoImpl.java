@@ -4,122 +4,77 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.youcode.reservationApp.entities.Users;
 
+@Repository
 public class UserDaoImpl implements UserDao {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	@Override
+	@Transactional
 	public Users getById(Long id) {
 		
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx =  session.beginTransaction();
+		Session session = sessionFactory.getCurrentSession();
+		
 		Users user = session.get(Users.class, id);
-		 
-		try {
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			if (session!=null) {
-				session.close();
-			}
-		}
 		
 		return user;
 	}
 
 	@Override
+	@Transactional
 	public void addUser(Users user) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx =  session.beginTransaction();
-		session.persist(user);
 		
-		try {
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) {
-					tx.rollback();
-			}
-			e.printStackTrace();
-		}finally {
-			if (session!=null) {
-				session.close();
-			}
-		}
+		Session session = sessionFactory.getCurrentSession();
 		
+		session.saveOrUpdate(user);
+	
 	}
 
 	@Override
+	@Transactional
 	public void deleteUser(Long id) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx =  session.beginTransaction();
+		
+		Session session = sessionFactory.getCurrentSession();
+		
 		Users user = getById(id);
+		
 		session.delete(user);
 		
-		try {
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) {
-					tx.rollback();
-			}
-			e.printStackTrace();
-		}finally {
-			if (session!=null) {
-				session.close();
-			}
-		}
-		
 	}
 
 	@Override
+	@Transactional
 	public void updateUser(Users updatedUser) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx =  session.beginTransaction();
+		
+		Session session = sessionFactory.getCurrentSession();
+
 		Users user = getById(updatedUser.getId());
 
 		session.update(updatedUser);
 		
-		try {
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) {
-					tx.rollback();
-			}
-			e.printStackTrace();
-		}finally {
-			if (session!=null) {
-				session.close();
-			}
-		}
-		
 	}
 
 	@Override
+	@Transactional
 	public List<Users> getAllUsers() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx =  session.beginTransaction();
+		
+		Session session = sessionFactory.getCurrentSession();
+
 		List users = new ArrayList<Users>();
 		
 		Query query = session.createQuery("from Users");
 		
 		users = query.getResultList();
-		
-		try {
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) {
-					tx.rollback();
-			}
-			e.printStackTrace();
-		}finally {
-			if (session!=null) {
-				session.close();
-			}
-		}
  
 		return users;
 	}

@@ -1,10 +1,17 @@
 package com.youcode.reservationApp.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Users implements java.io.Serializable {
@@ -20,6 +27,9 @@ public class Users implements java.io.Serializable {
 	private String password;
 	private String role;
 	private String state;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+	private List<Reservation> reservations;
 
 	public Users() {
 	}
@@ -88,5 +98,24 @@ public class Users implements java.io.Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+	
+	public void addReservation(Reservation reservation) {
+		if (reservations == null) {
+			reservations = new ArrayList<Reservation>();
+		}
+		
+		reservations.add(reservation);
+		
+		reservation.setUser(this);
+	}
+	
 
 }
