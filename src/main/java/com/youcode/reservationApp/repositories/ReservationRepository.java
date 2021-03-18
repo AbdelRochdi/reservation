@@ -32,9 +32,13 @@ public class ReservationRepository {
 		
 		query.setParameter("id", id);
 		
-		Users user = (Users) query.getSingleResult();
+		try {
+			Users user = (Users) query.getSingleResult();
+			reservations = user.getReservations();
+		} catch (Exception e) {
+			System.out.println("no results found in the database");
+		}
 		
-		reservations = user.getReservations();
 		
 		return reservations;
 	}

@@ -27,13 +27,17 @@ public class UserRepository {
 		Query query = session.createQuery("from Users u where u.email=:email");
 		query.setParameter("email", email);
 		
-		
-		List<Users> users = query.getResultList();
-		
-		if (users.size() > 0) {
-			Users user = users.get(0);
-			return user;
+		try {
+			List<Users> users = query.getResultList();
+			if (users.size() > 0) {
+				Users user = users.get(0);
+				return user;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 		
 		return null;
 	}

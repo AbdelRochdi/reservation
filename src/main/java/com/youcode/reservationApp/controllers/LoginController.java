@@ -40,14 +40,18 @@ public class LoginController {
 		
 		if (users != null) {
 			if (password.equals(users.getPassword())) {
-				session.setAttribute("id", users.getId());
-				session.setAttribute("role", users.getRole());
+				
 				if (users.getRole().equals("admin")) {
+					session.setAttribute("id", users.getId());
+					session.setAttribute("role", users.getRole());
 					return "redirect:/admin";
 				}else {	
 					if(users.getState().equals("active")){
+						session.setAttribute("id", users.getId());
+						session.setAttribute("role", users.getRole());
 						return "redirect:/reservation";
 					}else {
+						System.out.println("inactive user, check with the administration");
 						return "redirect:/";
 					}
 				}

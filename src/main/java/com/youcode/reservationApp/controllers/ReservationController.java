@@ -1,5 +1,6 @@
 package com.youcode.reservationApp.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ public class ReservationController {
 
 	@Autowired
 	private ReservationDao reservationDao;
-	
+
 	@Autowired
 	private ReservationRepository reservationRepository;
 
@@ -32,22 +33,24 @@ public class ReservationController {
 	@RequestMapping("/reservation")
 	public String reservationPage(Model theModel, HttpSession session) {
 		if (session.getAttribute("role") != null && session.getAttribute("role").equals("apprenant")) {
-			
-				Long userId = (Long)session.getAttribute("id");
-			
-				Users user = userDao.getById(userId);
-				
-				List<Reservation> reservations = reservationRepository.getAllReservationsById(userId);
-				
-				theModel.addAttribute("name",user.getFirstName());
-				theModel.addAttribute("reservations",reservations);
-				
-				return "reservation";
-		}else {
+
+			Long userId = (Long) session.getAttribute("id");
+
+			List<Reservation> reservations = new ArrayList<Reservation>();
+
+			Users user = userDao.getById(userId);
+
+			reservations = reservationRepository.getAllReservationsById(userId);
+
+			theModel.addAttribute("reservations", reservations);
+
+			theModel.addAttribute("name", user.getFirstName());
+
+			return "reservation";
+		} else {
 			return "redirect:/";
 		}
-		
-		
+
 	}
 
 	// controller method to process the reservation request

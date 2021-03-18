@@ -3,9 +3,26 @@
 
 
 
-<h3>Today's reservation</h3>
+<h3>Users reservation History</h3>
 
+<table>
+	<tr>
+		<th>Prenom</th>
+		<th>Nom</th>
+		<th>Date</th>
+		<th>State</th>
+	</tr>
 
+	<c:forEach items="${ reservations }" var="reservation">
+		<tr>
+			<td>${ reservation.user.firstName }</td>
+			<td>${ reservation.user.lastName }</td>
+			<td>${ reservation.date }</td>
+			<td>${ reservation.state }</td>
+		</tr>
+	</c:forEach>
+
+</table>
 
 
 <h3>Users list</h3>
