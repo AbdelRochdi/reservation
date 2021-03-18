@@ -20,8 +20,6 @@ public class ReservationDaoImpl implements ReservationDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	@Autowired
-	private UserDao userDao;
 
 	@Override
 	@Transactional
@@ -36,13 +34,13 @@ public class ReservationDaoImpl implements ReservationDao {
 
 	@Override
 	@Transactional
-	public void addReservation() {
+	public void addReservation(Long userId) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
 		Reservation newReservation = new Reservation();
 		
-		Users users = session.get(Users.class, 5L);
+		Users users = session.get(Users.class, userId);
 		
 		users.addReservation(newReservation);
 		

@@ -9,6 +9,8 @@
 	background-color: #909bde;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+	vertical-align: center;
 	padding: 1rem;
 }
 
@@ -55,6 +57,10 @@ table{
 
 th{
 	background: #909bde;
+}
+
+.logo{
+	width: 10%;
 }
 
 
