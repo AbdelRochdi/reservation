@@ -16,6 +16,6 @@
 
 		<img src="${ pageContext.request.contextPath }/resources/logo.png" alt="logo" class="logo"/>
 		
-		<a href="logout">Logout</a>
+		<a href="logout" class="logout">Logout</a>
 
 	</header>

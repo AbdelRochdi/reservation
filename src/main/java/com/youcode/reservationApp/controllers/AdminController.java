@@ -35,6 +35,33 @@ public class AdminController {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	public void reservationConfirmation(List<Reservation> todayReservations, ReservationLimit todayReservationLimit) {
+		todayReservations.sort(Comparator.comparing(Reservation::getDate));
+		int i = 0;
+		ArrayList<Long> ids = new ArrayList<Long>();
+		
+		for (int k = 0; k <= 21; k++) {
+			for (int j = 0; j < todayReservations.size(); j++) {
+				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < todayReservationLimit.getReservationLimit()) {
+					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
+						System.out.println(i);
+						todayReservations.get(j).setState("active");
+						reservationDao.updateReservation(todayReservations.get(j));
+						i++;
+						ids.add(todayReservations.get(j).getReservationId());
+						System.out.println(i);
+					}	
+				} else{
+					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
+					todayReservations.get(j).setState("inactive");
+					reservationDao.updateReservation(todayReservations.get(j));
+					}
+				}
+			}
+			
+		}
+	}
 
 	@RequestMapping("/admin")
 	public String showAdmin(Model model, HttpSession session) {
@@ -43,39 +70,28 @@ public class AdminController {
 			List<Users> users = userDao.getAllUsers();
 			List<Reservation> reservations = reservationDao.getAllReservations();
 			List<ReservationLimit> reservationLimits = userRepository.getAllReservationLimits();
-			List<Reservation> todayReservations = reservationRepository.getAllReservationsToday();
-			List<Reservation> todayActiveReservations = reservationRepository.getAllActiveReservationsToday();
+			List<Reservation> todayMatinReservations = reservationRepository.getAllReservationsTodayByType("matin");
+			List<Reservation> todaySoirReservations = reservationRepository.getAllReservationsTodayByType("soir");
+			List<Reservation> todayWeekendReservations = reservationRepository.getAllReservationsTodayByType("week-end");
+			List<Reservation> todayMatinActiveReservations = reservationRepository.getAllActiveReservationsToday("matin");
+			List<Reservation> todaySoirActiveReservations = reservationRepository.getAllActiveReservationsToday("soir");
+			List<Reservation> todayWeekendActiveReservations = reservationRepository.getAllActiveReservationsToday("week-end");
 
-			ReservationLimit todayReservationLimit = reservationRepository.getTodayReservationLimit();
+			ReservationLimit todayMatinReservationLimit = reservationRepository.getTodayReservationLimit("matin");
+			ReservationLimit todaySoirReservationLimit = reservationRepository.getTodayReservationLimit("soir");
+			ReservationLimit todayWeekendReservationLimit = reservationRepository.getTodayReservationLimit("week-end");
 
-			todayReservations.sort(Comparator.comparing(Reservation::getDate));
-			int i = 0;
-			ArrayList<Long> ids = new ArrayList<Long>();
-			
-			for (int k = 0; k <= 21; k++) {
-				for (int j = 0; j < todayReservations.size(); j++) {
-					if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < todayReservationLimit.getReservationLimit()) {
-						if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-							System.out.println(i);
-							todayReservations.get(j).setState("active");
-							reservationDao.updateReservation(todayReservations.get(j));
-							i++;
-							ids.add(todayReservations.get(j).getReservationId());
-							System.out.println(i);
-						}	
-					} else{
-						if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-						todayReservations.get(j).setState("inactive");
-						reservationDao.updateReservation(todayReservations.get(j));
-						}
-					}
-				}
-				
-			}
+			reservationConfirmation(todayWeekendReservations, todayWeekendReservationLimit);
+			reservationConfirmation(todayMatinReservations, todayMatinReservationLimit);
+			reservationConfirmation(todaySoirReservations, todaySoirReservationLimit);
 
 			model.addAttribute("reservations", reservations);
-			model.addAttribute("todayReservations", todayReservations);
-			model.addAttribute("todayActiveReservations", todayActiveReservations);
+			model.addAttribute("todayMatinReservations", todayMatinReservations);
+			model.addAttribute("todaySoirReservations", todaySoirReservations);
+			model.addAttribute("todayWeekendReservations", todayWeekendReservations);
+			model.addAttribute("todayMatinActiveReservations", todayMatinActiveReservations);
+			model.addAttribute("todaySoirActiveReservations", todaySoirActiveReservations);
+			model.addAttribute("todayWeekendActiveReservations", todayWeekendActiveReservations);
 			model.addAttribute("reservationLimits", reservationLimits);
 			model.addAttribute("users", users);
 

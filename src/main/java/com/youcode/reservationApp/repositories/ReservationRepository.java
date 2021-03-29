@@ -44,14 +44,14 @@ public class ReservationRepository {
 	}
 	
 	@Transactional
-	public List<Reservation> getAllReservationsToday() {
+	public List<Reservation> getAllReservationsTodayByType(String type) {
 		
 		Session session = sessionFactory.getCurrentSession();
 
 		List reservations = new ArrayList<Reservation>();
 		
-		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE()+1");
-		
+		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE()+1 and type =:type");
+		query.setParameter("type", type);
 		reservations = query.getResultList();
  
 		return reservations;
@@ -76,14 +76,15 @@ public class ReservationRepository {
 	}
 	
 	@Transactional
-	public List<Reservation> getAllActiveReservationsToday() {
+	public List<Reservation> getAllActiveReservationsToday(String type) {
 		
 		Session session = sessionFactory.getCurrentSession();
 
 		List reservations = new ArrayList<Reservation>();
 		
-		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE() and r.state = 'active'");
-		
+		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE()+1 and r.state = 'active' and r.type=:type");
+		query.setParameter("type", type);
+
 		reservations = query.getResultList();
  
 		return reservations;

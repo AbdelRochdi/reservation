@@ -94,8 +94,8 @@ public class ReservationController {
 			userRepository.addPresence(userId, 3);
 		}
 		
-		ReservationLimit todayReservationLimit = reservationRepository.getTodayReservationLimit();
-		List<Reservation> todayReservations = reservationRepository.getAllReservationsToday();
+		ReservationLimit todayReservationLimit = reservationRepository.getTodayReservationLimit("matin");
+		List<Reservation> todayReservations = reservationRepository.getAllReservationsTodayByType("matin");
 		
 		todayReservations.sort(Comparator.comparing(Reservation::getDate));
 		int i = 0;
@@ -141,8 +141,8 @@ public class ReservationController {
 			userRepository.deducePresence(userId, 3);
 		}
 		
-		ReservationLimit todayReservationLimit = reservationRepository.getTodayReservationLimit();
-		List<Reservation> todayReservations = reservationRepository.getAllReservationsToday();
+		ReservationLimit todayReservationLimit = reservationRepository.getTodayReservationLimit("matin");
+		List<Reservation> todayReservations = reservationRepository.getAllReservationsTodayByType("matin");
 		
 		todayReservations.sort(Comparator.comparing(Reservation::getDate));
 		int i = 0;

@@ -34,6 +34,8 @@
 
 <h3>Today active reservation List</h3>
 
+<section class="reservations">
+
 <table>
 	<tr>
 		<th>Prenom</th>
@@ -43,7 +45,7 @@
 		<th>State</th>
 	</tr>
 
-	<c:forEach items="${ todayActiveReservations }" var="reservation">
+	<c:forEach items="${ todayMatinActiveReservations }" var="reservation">
 		<tr>
 			<td>${ reservation.user.firstName }</td>
 			<td>${ reservation.user.lastName }</td>
@@ -54,9 +56,52 @@
 	</c:forEach>
 
 </table>
+<table>
+	<tr>
+		<th>Prenom</th>
+		<th>Nom</th>
+		<th>Date</th>
+		<th>Type</th>
+		<th>State</th>
+	</tr>
+
+	<c:forEach items="${ todaySoirActiveReservations }" var="reservation">
+		<tr>
+			<td>${ reservation.user.firstName }</td>
+			<td>${ reservation.user.lastName }</td>
+			<td>${ reservation.date }</td>
+			<td>${ reservation.type }</td>
+			<td>${ reservation.state }</td>
+		</tr>
+	</c:forEach>
+
+</table>
+<table>
+	<tr>
+		<th>Prenom</th>
+		<th>Nom</th>
+		<th>Date</th>
+		<th>Type</th>
+		<th>State</th>
+	</tr>
+
+	<c:forEach items="${ todayWeekendActiveReservations }" var="reservation">
+		<tr>
+			<td>${ reservation.user.firstName }</td>
+			<td>${ reservation.user.lastName }</td>
+			<td>${ reservation.date }</td>
+			<td>${ reservation.type }</td>
+			<td>${ reservation.state }</td>
+		</tr>
+	</c:forEach>
+
+</table>
+</section>
+
+
 
 <h3>Today reservation List</h3>
-
+<section class="reservations">
 <table>
 	<tr>
 		<th>Prenom</th>
@@ -66,7 +111,7 @@
 		<th>State</th>
 	</tr>
 
-	<c:forEach items="${ todayReservations }" var="reservation">
+	<c:forEach items="${ todayMatinReservations }" var="reservation">
 		<tr>
 			<td>${ reservation.user.firstName }</td>
 			<td>${ reservation.user.lastName }</td>
@@ -77,6 +122,47 @@
 	</c:forEach>
 
 </table>
+<table>
+	<tr>
+		<th>Prenom</th>
+		<th>Nom</th>
+		<th>Date</th>
+		<th>Type</th>
+		<th>State</th>
+	</tr>
+
+	<c:forEach items="${ todaySoirReservations }" var="reservation">
+		<tr>
+			<td>${ reservation.user.firstName }</td>
+			<td>${ reservation.user.lastName }</td>
+			<td>${ reservation.date }</td>
+			<td>${ reservation.type }</td>
+			<td>${ reservation.state }</td>
+		</tr>
+	</c:forEach>
+
+</table>
+<table>
+	<tr>
+		<th>Prenom</th>
+		<th>Nom</th>
+		<th>Date</th>
+		<th>Type</th>
+		<th>State</th>
+	</tr>
+
+	<c:forEach items="${ todayWeekendReservations }" var="reservation">
+		<tr>
+			<td>${ reservation.user.firstName }</td>
+			<td>${ reservation.user.lastName }</td>
+			<td>${ reservation.date }</td>
+			<td>${ reservation.type }</td>
+			<td>${ reservation.state }</td>
+		</tr>
+	</c:forEach>
+
+</table>
+</section>
 
 <h3>Users reservation History</h3>
 
@@ -125,7 +211,7 @@
 			<td>${ user.email }</td>
 			<td>${ user.role }</td>
 			<td>${ user.state }</td>
-			<td><a href="activateUser?id=${ user.id }">${ user.state == 'active' ? 'Désactiver' : 'Activer' }</a></td>
+			<td><a href="activateUser?id=${ user.id }" class="${ user.state == 'active' ? 'disable' : 'enable' }">${ user.state == 'active' ? 'Désactiver' : 'Activer' }</a></td>
 		</tr>
 	</c:forEach>
 
