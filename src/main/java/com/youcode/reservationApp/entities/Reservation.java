@@ -34,6 +34,7 @@ public class Reservation implements java.io.Serializable {
 	private Date date;
 	@Column(name = "state", insertable = false)
 	private String state;
+	private String type;
 
 	public Reservation() {
 	}
@@ -76,5 +77,15 @@ public class Reservation implements java.io.Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 
 }

@@ -34,11 +34,12 @@ public class ReservationDaoImpl implements ReservationDao {
 
 	@Override
 	@Transactional
-	public void addReservation(Long userId) {
+	public void addReservation(Long userId, String type) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
 		Reservation newReservation = new Reservation();
+		newReservation.setType(type);
 		
 		Users users = session.get(Users.class, userId);
 		
@@ -65,8 +66,6 @@ public class ReservationDaoImpl implements ReservationDao {
 	public void updateReservation(Reservation updatedReservation) {
 		
 		Session session = sessionFactory.getCurrentSession();
-
-		Reservation reservation = getById(updatedReservation.getReservationId());
 
 		session.update(updatedReservation);
 		

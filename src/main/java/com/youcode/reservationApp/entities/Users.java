@@ -10,8 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Users implements java.io.Serializable {
@@ -30,6 +31,10 @@ public class Users implements java.io.Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Reservation> reservations;
+	
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private UserReputation userReputation;
 
 	public Users() {
 	}
@@ -116,6 +121,16 @@ public class Users implements java.io.Serializable {
 		
 		reservation.setUser(this);
 	}
+
+	public UserReputation getUserReputation() {
+		return userReputation;
+	}
+
+	public void setUserReputation(UserReputation userReputation) {
+		this.userReputation = userReputation;
+		this.userReputation.setUser(this);
+	}
+	
 	
 
 }
