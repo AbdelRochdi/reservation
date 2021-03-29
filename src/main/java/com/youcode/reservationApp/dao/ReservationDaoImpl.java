@@ -1,6 +1,8 @@
 package com.youcode.reservationApp.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -39,7 +41,15 @@ public class ReservationDaoImpl implements ReservationDao {
 		Session session = sessionFactory.getCurrentSession();
 		
 		Reservation newReservation = new Reservation();
+		
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		
+		Date tomorrow = calendar.getTime();
+		
 		newReservation.setType(type);
+		newReservation.setDate(tomorrow);
 		
 		Users users = session.get(Users.class, userId);
 		

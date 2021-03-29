@@ -50,7 +50,7 @@ public class ReservationRepository {
 
 		List reservations = new ArrayList<Reservation>();
 		
-		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE()");
+		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE()+1");
 		
 		reservations = query.getResultList();
  
@@ -58,13 +58,14 @@ public class ReservationRepository {
 	}
 	
 	@Transactional
-	public ReservationLimit getTodayReservationLimit() {
+	public ReservationLimit getTodayReservationLimit(String type) {
 		
 		Session session = sessionFactory.getCurrentSession();
 
 		ReservationLimit reservationLimit = new ReservationLimit();
 		
-		Query query = session.createQuery("from ReservationLimit r where DATE(r.date) = CURDATE()");
+		Query query = session.createQuery("from ReservationLimit r where DATE(r.date) = CURDATE()+1 and r.type=:type");
+		query.setParameter("type", type);
 		try {			
 			reservationLimit = (ReservationLimit) query.getSingleResult();
 		} catch (Exception e) {
@@ -73,5 +74,65 @@ public class ReservationRepository {
  
 		return reservationLimit;
 	}
+	
+	@Transactional
+	public List<Reservation> getAllActiveReservationsToday() {
+		
+		Session session = sessionFactory.getCurrentSession();
+
+		List reservations = new ArrayList<Reservation>();
+		
+		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE() and r.state = 'active'");
+		
+		reservations = query.getResultList();
+ 
+		return reservations;
+	}
+	
+	@Transactional
+	public Reservation getReservationByTypeById(Long id, String type) {
+		
+		Session session = sessionFactory.getCurrentSession();
+
+		Reservation reservation = new Reservation();
+		
+		Query query = session.createQuery("select r from Reservation r join fetch r.user u where DATE(r.date) = CURDATE() + 1 and r.type=:type and u.id=:id");
+		
+		query.setParameter("id", id);
+		query.setParameter("type", type);
+		try {
+			reservation = (Reservation) query.getSingleResult();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+ 
+		return reservation;
+	}
+	
+	@Transactional
+	public void deleteReservationByTypeById(Long id, String type) {
+		
+		Session session = sessionFactory.getCurrentSession();
+
+		Reservation reservation = new Reservation();
+		
+		Query query = session.createQuery("select r from Reservation r join fetch r.user u where DATE(r.date) = CURDATE() + 1 and r.type=:type and u.id=:id");
+		
+		query.setParameter("id", id);
+		query.setParameter("type", type);
+		
+		reservation = (Reservation) query.getSingleResult();
+		
+		session.delete(reservation);
+	
+	}
+	
+	
+	
+	
+	
+
+	
+	
 	
 }

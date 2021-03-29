@@ -13,10 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 public class Reservation implements java.io.Serializable {
@@ -28,8 +24,6 @@ public class Reservation implements java.io.Serializable {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "user_id")
 	private Users user;
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date")
 	private Date date;
 	@Column(name = "state", insertable = false)

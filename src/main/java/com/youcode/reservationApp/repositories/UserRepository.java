@@ -104,6 +104,24 @@ public class UserRepository {
 	}
 	
 	@Transactional 
+	public void deducePresence(Long id, int points) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		Users user = session.get(Users.class, id);
+		UserReputation userReputation = new UserReputation();
+		if (user.getUserReputation() == null) {
+			userReputation.setPresence(points);
+			user.setUserReputation(userReputation);
+		}else {
+			userReputation = user.getUserReputation();
+			userReputation.setPresence(userReputation.getPresence()-points);
+		}
+		
+		session.saveOrUpdate(user);
+		
+	}
+	
+	@Transactional 
 	public void addAbsence(Long id, int points) {
 		
 		

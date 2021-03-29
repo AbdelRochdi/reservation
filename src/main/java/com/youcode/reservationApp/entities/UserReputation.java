@@ -8,7 +8,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 @Entity
-public class UserReputation {
+public class UserReputation implements java.io.Serializable {
 
 	@Id
 	@Column(name = "user_id")

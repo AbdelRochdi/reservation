@@ -32,6 +32,29 @@
 
 </table>
 
+<h3>Today active reservation List</h3>
+
+<table>
+	<tr>
+		<th>Prenom</th>
+		<th>Nom</th>
+		<th>Date</th>
+		<th>Type</th>
+		<th>State</th>
+	</tr>
+
+	<c:forEach items="${ todayActiveReservations }" var="reservation">
+		<tr>
+			<td>${ reservation.user.firstName }</td>
+			<td>${ reservation.user.lastName }</td>
+			<td>${ reservation.date }</td>
+			<td>${ reservation.type }</td>
+			<td>${ reservation.state }</td>
+		</tr>
+	</c:forEach>
+
+</table>
+
 <h3>Today reservation List</h3>
 
 <table>

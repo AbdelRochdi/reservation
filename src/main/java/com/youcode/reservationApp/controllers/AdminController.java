@@ -3,7 +3,6 @@ package com.youcode.reservationApp.controllers;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +44,7 @@ public class AdminController {
 			List<Reservation> reservations = reservationDao.getAllReservations();
 			List<ReservationLimit> reservationLimits = userRepository.getAllReservationLimits();
 			List<Reservation> todayReservations = reservationRepository.getAllReservationsToday();
+			List<Reservation> todayActiveReservations = reservationRepository.getAllActiveReservationsToday();
 
 			ReservationLimit todayReservationLimit = reservationRepository.getTodayReservationLimit();
 
@@ -75,6 +75,7 @@ public class AdminController {
 
 			model.addAttribute("reservations", reservations);
 			model.addAttribute("todayReservations", todayReservations);
+			model.addAttribute("todayActiveReservations", todayActiveReservations);
 			model.addAttribute("reservationLimits", reservationLimits);
 			model.addAttribute("users", users);
 
