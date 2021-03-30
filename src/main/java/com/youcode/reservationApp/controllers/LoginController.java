@@ -30,6 +30,20 @@ public class LoginController {
 		}
 	}
 	
+	@RequestMapping("/home")
+	public String homePage(HttpSession session) {
+		
+		if (session.getAttribute("id") == null) {
+			return "index";
+		}else {
+			if (session.getAttribute("role").equals("admin")) {
+				return "redirect:/admin";
+			}else {				
+				return "redirect:/reservation";
+			}
+		}
+	}
+	
 	@RequestMapping("/loginProcess")
 	public String login(HttpServletRequest request, HttpSession session){
 		

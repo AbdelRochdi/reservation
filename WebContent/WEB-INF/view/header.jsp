@@ -14,7 +14,7 @@
 
 	<header class="header">
 
-		<img src="${ pageContext.request.contextPath }/resources/logo.png" alt="logo" class="logo"/>
+		<img src="${ pageContext.request.contextPath }/resources/logo.png" alt="logo" class="logo"><a href="home"></a></img>
 		
 		<a href="logout" class="logout">Logout</a>
 
