@@ -1,18 +1,18 @@
 @charset "UTF-8";
 
-*{
+* {
 	margin: 0;
 	padding: 0;
 	font-family: montserrat;
 	font-size: 0.9rem;
 }
 
-h1{
+h1 {
 	text-align: center;
 	font-size: 1.5rem;
 }
 
-.header{
+.header {
 	background-color: #283142;
 	display: flex;
 	justify-content: space-between;
@@ -21,32 +21,34 @@ h1{
 	padding: 1rem;
 }
 
-.header ul{
+.header ul {
 	list-style-type: none;
 	display: flex;
 }
 
-.header ul li{
-	margin: 0 1rem; 
+.header ul li {
+	margin: 0 1rem;
 }
 
-.header ul li a{
+.header ul li a {
 	text-decoration: none;
-	color: black;
-}
-
-.header ul li a:hover{
 	color: white;
+	transition: all 300ms ease-in-out 25ms;
 }
 
-.form{
+.header ul li a:hover {
+	color: #058DFE;
+	transform: translateY(-10px);
+}
+
+.form {
 	display: flex;
 	flex-direction: column;
 	width: 80%;
 	margin: 1.2rem auto 0;
 }
 
-.form input, select{
+.form input, select {
 	margin: 0.7rem 0;
 	border-radius: 0.2rem;
 	height: 2rem;
@@ -54,68 +56,73 @@ h1{
 }
 
 table, th, td {
-  border: 1px solid black;
-  padding: 0.4rem;
-  
+	border: 1px solid black;
+	padding: 0.4rem;
 }
 
-table{
+table {
 	margin: 2rem auto 0;
+	background: white;
 }
 
-th{
+th {
 	background: #058DFE;
 	color: white;
 }
 
-.logo{
+td {
+	background: white;
+	color: black;
+}
+
+.logo {
 	width: 10%;
 }
 
-.reservations{
+.reservations {
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
 }
 
-a{
+a {
 	text-decoration: none;
 	color: white;
 }
 
-.logout{
+.logout {
 	background-color: red;
 	border-radius: 0.6em;
 	padding: 0.5em 0.7em;
 }
 
-.login{
+.login {
 	background-color: green;
 	border-radius: 0.6rem;
-	border:none;
+	border: none;
 	color: white;
 	cursor: pointer;
 }
 
-.enable{
+.enable {
 	background-color: green;
 	border-radius: 0.6em;
 	padding: 0.3em 0.5em;
 	font-size: 0.8rem;
 }
 
-.disable{
+.disable {
 	background-color: red;
 	border-radius: 0.6em;
 	padding: 0.3em 0.5em;
 	font-size: 0.8rem;
 }
 
-.index{
-	background-image: url("school.jpg"); 
+.index {
+	background-image: url("school.jpg");
 }
 
-.loginSection{
+.loginSection {
 	background-color: white;
 	width: 25%;
 	margin: 2rem auto;
@@ -123,17 +130,45 @@ a{
 	text-align: center;
 }
 
-.register{
+.register {
 	background-color: #058DFE;
 	border-radius: 0.2rem;
-	border:none;
+	border: none;
 	color: white;
 	padding: 0.8em 0;
 	margin: 0.7rem 0;
 }
 
+footer {
+	width: 100%;
+	height: 5rem;
+	background-color: #26282B;
+	margin-top: 2rem;
+	padding: 2rem 0;
+	text-align: center;
+	opacity: 0.9;
+}
 
+.you {
+	font-weight: bold;
+	font-size: 1.1rem;
+}
 
+.code {
+	font-weight: bold;
+	color: #058DFE;
+	font-size: 1.1rem;
+}
 
+.youcode {
+	color: white;
+	font-weight: 200;
+	font-size: 1.1rem;
+}
 
-
+.admin{
+	background-image: url("students.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	color: white;
+}

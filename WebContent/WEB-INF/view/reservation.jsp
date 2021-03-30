@@ -1,8 +1,9 @@
 <%@ include file="header.jsp"%>
 
 <h2>Welcome ${ name }</h2>
-
+<c:if test="${ now >= 9 &&  now < 20 }">
 would you like to make a reservation for tomorrow ?
+
 <c:choose>
 	<c:when test="${today == 'SATURDAY' || today == 'FRIDAY'}">
 		<c:choose>
@@ -58,6 +59,9 @@ would you like to make a reservation for tomorrow ?
 		</c:choose>
 	</c:otherwise>
 </c:choose>
+</c:if>
+
+
 
 <h3>Today active reservation List</h3>
 

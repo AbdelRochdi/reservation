@@ -10,12 +10,20 @@
 <link rel="stylesheet" type="text/css"
 	href="${ pageContext.request.contextPath }/resources/style.css">
 </head>
-<body>
+<body class="admin">
 
 	<header class="header">
 
-		<img src="${ pageContext.request.contextPath }/resources/logo.png" alt="logo" class="logo"><a href="home"></a></img>
-		
-		<a href="logout" class="logout">Logout</a>
+		<img src="${ pageContext.request.contextPath }/resources/logo.png"
+			alt="logo" class="logo">
+		<ul class="menu">
+			<li><a href="admin">Active list</a></li>
+			<li><a href="adminReservations">Reservations</a></li>
+			<li><a href="users">Users</a></li>
+			<li><a href="logout" class="logout">Logout</a></li>
+		</ul>
+
+
+
 
 	</header>

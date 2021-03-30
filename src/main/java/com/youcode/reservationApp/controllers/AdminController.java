@@ -37,82 +37,29 @@ public class AdminController {
 	@Autowired
 	private ReservationRepository reservationRepository;
 
-	public void reservationConfirmation(List<Reservation> todayReservations, ReservationLimit todayReservationLimit) {
-		todayReservations.sort(Comparator.comparing(Reservation::getDate));
-		int i = 0;
-		ArrayList<Long> ids = new ArrayList<Long>();
-
-		System.out.println(todayReservationLimit.getDate());
-
-		int reservationLimit;
-
-		if (todayReservationLimit.getReservationLimit() == 0 && todayReservationLimit.getDate() == null) {
-			reservationLimit = 3;
-		} else {
-			reservationLimit = todayReservationLimit.getReservationLimit();
-		}
-
-		for (int k = 0; k <= 21; k++) {
-			for (int j = 0; j < todayReservations.size(); j++) {
-				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < reservationLimit) {
-					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-						System.out.println(i);
-						todayReservations.get(j).setState("active");
-						reservationDao.updateReservation(todayReservations.get(j));
-						i++;
-						ids.add(todayReservations.get(j).getReservationId());
-						System.out.println(i);
-					}
-				} else {
-					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-						todayReservations.get(j).setState("inactive");
-						reservationDao.updateReservation(todayReservations.get(j));
-					}
-				}
-			}
-
-		}
-	}
+	
 
 	@RequestMapping("/admin")
 	public String showAdmin(Model model, HttpSession session) {
 		if (session.getAttribute("role") != null && session.getAttribute("role").equals("admin")) {
 
-			List<Users> users = userDao.getAllUsers();
-			List<Reservation> reservations = reservationDao.getAllReservations();
-			List<ReservationLimit> reservationLimits = userRepository.getAllReservationLimits();
-
-			List<Reservation> todayMatinReservations = reservationRepository.getAllReservationsTodayByType("matin");
-			List<Reservation> todaySoirReservations = reservationRepository.getAllReservationsTodayByType("soir");
-			List<Reservation> todayWeekendReservations = reservationRepository
-					.getAllReservationsTodayByType("week-end");
+			
 
 			List<Reservation> todayMatinActiveReservations = reservationRepository
 					.getAllActiveReservationsToday("matin");
 			List<Reservation> todaySoirActiveReservations = reservationRepository.getAllActiveReservationsToday("soir");
 			List<Reservation> todayWeekendActiveReservations = reservationRepository
 					.getAllActiveReservationsToday("week-end");
-
-			ReservationLimit todayMatinReservationLimit = reservationRepository.getTodayReservationLimit("matin");
-			ReservationLimit todaySoirReservationLimit = reservationRepository.getTodayReservationLimit("soir");
-			ReservationLimit todayWeekendReservationLimit = reservationRepository.getTodayReservationLimit("week-end");
-
-			reservationConfirmation(todayWeekendReservations, todayWeekendReservationLimit);
-			reservationConfirmation(todayMatinReservations, todayMatinReservationLimit);
-			reservationConfirmation(todaySoirReservations, todaySoirReservationLimit);
 			
 			String today = LocalDate.now().getDayOfWeek().name();
 
-			model.addAttribute("reservations", reservations);
-			model.addAttribute("todayMatinReservations", todayMatinReservations);
-			model.addAttribute("todaySoirReservations", todaySoirReservations);
-			model.addAttribute("todayWeekendReservations", todayWeekendReservations);
+
 			model.addAttribute("todayMatinActiveReservations", todayMatinActiveReservations);
 			model.addAttribute("todaySoirActiveReservations", todaySoirActiveReservations);
 			model.addAttribute("todayWeekendActiveReservations", todayWeekendActiveReservations);
-			model.addAttribute("reservationLimits", reservationLimits);
+
 			model.addAttribute("today",today);
-			model.addAttribute("users", users);
+			
 
 			return "admin";
 		} else {
@@ -224,4 +171,35 @@ public class AdminController {
 
 		return "redirect:/admin";
 	}
+	
+	@RequestMapping("/users")
+	public String users(Model model) {
+
+		List<Users> users = userDao.getAllUsers();
+		List<Reservation> reservations = reservationDao.getAllReservations();
+		model.addAttribute("users", users);
+		model.addAttribute("reservations", reservations);
+
+		return "users";
+	}
+	
+	@RequestMapping("/adminReservations")
+	public String adminReservations(Model model) {
+
+		List<ReservationLimit> reservationLimits = userRepository.getAllReservationLimits();
+
+		List<Reservation> todayMatinReservations = reservationRepository.getAllReservationsTodayByType("matin");
+		List<Reservation> todaySoirReservations = reservationRepository.getAllReservationsTodayByType("soir");
+		List<Reservation> todayWeekendReservations = reservationRepository
+				.getAllReservationsTodayByType("week-end");
+		
+		model.addAttribute("todayMatinReservations", todayMatinReservations);
+		model.addAttribute("todaySoirReservations", todaySoirReservations);
+		model.addAttribute("todayWeekendReservations", todayWeekendReservations);
+		model.addAttribute("reservationLimits", reservationLimits);
+
+		return "adminReservations";
+	}
+	
+	
 }
