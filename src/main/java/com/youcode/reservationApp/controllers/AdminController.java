@@ -1,6 +1,7 @@
 package com.youcode.reservationApp.controllers;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,15 +36,25 @@ public class AdminController {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
-	
+
 	public void reservationConfirmation(List<Reservation> todayReservations, ReservationLimit todayReservationLimit) {
 		todayReservations.sort(Comparator.comparing(Reservation::getDate));
 		int i = 0;
 		ArrayList<Long> ids = new ArrayList<Long>();
-		
+
+		System.out.println(todayReservationLimit.getDate());
+
+		int reservationLimit;
+
+		if (todayReservationLimit.getReservationLimit() == 0 && todayReservationLimit.getDate() == null) {
+			reservationLimit = 3;
+		} else {
+			reservationLimit = todayReservationLimit.getReservationLimit();
+		}
+
 		for (int k = 0; k <= 21; k++) {
 			for (int j = 0; j < todayReservations.size(); j++) {
-				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < todayReservationLimit.getReservationLimit()) {
+				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < reservationLimit) {
 					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
 						System.out.println(i);
 						todayReservations.get(j).setState("active");
@@ -51,15 +62,15 @@ public class AdminController {
 						i++;
 						ids.add(todayReservations.get(j).getReservationId());
 						System.out.println(i);
-					}	
-				} else{
+					}
+				} else {
 					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-					todayReservations.get(j).setState("inactive");
-					reservationDao.updateReservation(todayReservations.get(j));
+						todayReservations.get(j).setState("inactive");
+						reservationDao.updateReservation(todayReservations.get(j));
 					}
 				}
 			}
-			
+
 		}
 	}
 
@@ -70,12 +81,17 @@ public class AdminController {
 			List<Users> users = userDao.getAllUsers();
 			List<Reservation> reservations = reservationDao.getAllReservations();
 			List<ReservationLimit> reservationLimits = userRepository.getAllReservationLimits();
+
 			List<Reservation> todayMatinReservations = reservationRepository.getAllReservationsTodayByType("matin");
 			List<Reservation> todaySoirReservations = reservationRepository.getAllReservationsTodayByType("soir");
-			List<Reservation> todayWeekendReservations = reservationRepository.getAllReservationsTodayByType("week-end");
-			List<Reservation> todayMatinActiveReservations = reservationRepository.getAllActiveReservationsToday("matin");
+			List<Reservation> todayWeekendReservations = reservationRepository
+					.getAllReservationsTodayByType("week-end");
+
+			List<Reservation> todayMatinActiveReservations = reservationRepository
+					.getAllActiveReservationsToday("matin");
 			List<Reservation> todaySoirActiveReservations = reservationRepository.getAllActiveReservationsToday("soir");
-			List<Reservation> todayWeekendActiveReservations = reservationRepository.getAllActiveReservationsToday("week-end");
+			List<Reservation> todayWeekendActiveReservations = reservationRepository
+					.getAllActiveReservationsToday("week-end");
 
 			ReservationLimit todayMatinReservationLimit = reservationRepository.getTodayReservationLimit("matin");
 			ReservationLimit todaySoirReservationLimit = reservationRepository.getTodayReservationLimit("soir");
@@ -84,6 +100,8 @@ public class AdminController {
 			reservationConfirmation(todayWeekendReservations, todayWeekendReservationLimit);
 			reservationConfirmation(todayMatinReservations, todayMatinReservationLimit);
 			reservationConfirmation(todaySoirReservations, todaySoirReservationLimit);
+			
+			String today = LocalDate.now().getDayOfWeek().name();
 
 			model.addAttribute("reservations", reservations);
 			model.addAttribute("todayMatinReservations", todayMatinReservations);
@@ -93,6 +111,7 @@ public class AdminController {
 			model.addAttribute("todaySoirActiveReservations", todaySoirActiveReservations);
 			model.addAttribute("todayWeekendActiveReservations", todayWeekendActiveReservations);
 			model.addAttribute("reservationLimits", reservationLimits);
+			model.addAttribute("today",today);
 			model.addAttribute("users", users);
 
 			return "admin";
@@ -134,4 +153,75 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 
+	@RequestMapping("/markPresent")
+	public String markPresent(Model model, HttpServletRequest request) {
+
+		Long reservationId = Long.valueOf(request.getParameter("resid"));
+		Long userId = Long.valueOf(request.getParameter("userid"));
+
+		Reservation reservation = reservationDao.getById(reservationId);
+		String type = reservation.getType();
+
+		if (reservation.getPresence().equals("absent")) {
+			if (type.equals("matin")) {
+				userRepository.deduceAbsence(userId, 2);
+			} else if (type.equals("soir")) {
+				userRepository.deduceAbsence(userId, 1);
+			} else if (type.equals("week-end")) {
+				userRepository.deduceAbsence(userId, 3);
+			}
+		} else {
+			if (type.equals("matin")) {
+				userRepository.addPresence(userId, 2);
+			} else if (type.equals("soir")) {
+				userRepository.addPresence(userId, 1);
+			} else if (type.equals("week-end")) {
+				userRepository.addPresence(userId, 3);
+			}
+		}
+
+		reservationRepository.markPresence(reservationId, "present");
+
+		return "redirect:/admin";
+	}
+
+	@RequestMapping("/markAbsent")
+	public String markAbsent(Model model, HttpServletRequest request) {
+
+		Long reservationId = Long.valueOf(request.getParameter("resid"));
+		Long userId = Long.valueOf(request.getParameter("userid"));
+
+		Reservation reservation = reservationDao.getById(reservationId);
+		String type = reservation.getType();
+
+		if (reservation.getPresence().equals("present")) {
+			if (type.equals("matin")) {
+				userRepository.addAbsence(userId, 2);
+			} else if (type.equals("soir")) {
+				userRepository.addAbsence(userId, 1);
+			} else if (type.equals("week-end")) {
+				userRepository.addAbsence(userId, 3);
+			}
+		} else {
+			if (type.equals("matin")) {
+				userRepository.addAbsence(userId, 2);
+			} else if (type.equals("soir")) {
+				userRepository.addAbsence(userId, 1);
+			} else if (type.equals("week-end")) {
+				userRepository.addAbsence(userId, 3);
+			}
+
+			if (type.equals("matin")) {
+				userRepository.addPresence(userId, 2);
+			} else if (type.equals("soir")) {
+				userRepository.addPresence(userId, 1);
+			} else if (type.equals("week-end")) {
+				userRepository.addPresence(userId, 3);
+			}
+		}
+
+		reservationRepository.markPresence(reservationId, "absent");
+
+		return "redirect:/admin";
+	}
 }

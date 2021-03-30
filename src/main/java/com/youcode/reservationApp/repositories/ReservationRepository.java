@@ -71,7 +71,7 @@ public class ReservationRepository {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
- 
+		
 		return reservationLimit;
 	}
 	
@@ -127,6 +127,20 @@ public class ReservationRepository {
 		session.delete(reservation);
 	
 	}
+	
+	@Transactional
+	public void markPresence(Long id, String presence) {
+		
+		Session session = sessionFactory.getCurrentSession();
+
+		Reservation reservation = session.get(Reservation.class, id);
+		
+		reservation.setPresence(presence);
+		
+		session.saveOrUpdate(reservation);
+	
+	}
+	
 	
 	
 	

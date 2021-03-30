@@ -50,6 +50,7 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		newReservation.setType(type);
 		newReservation.setDate(tomorrow);
+		newReservation.setPresence("none");
 		
 		Users users = session.get(Users.class, userId);
 		

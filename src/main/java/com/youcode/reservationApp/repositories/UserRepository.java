@@ -124,7 +124,36 @@ public class UserRepository {
 	@Transactional 
 	public void addAbsence(Long id, int points) {
 		
+		Session session = sessionFactory.getCurrentSession();
+		Users user = session.get(Users.class, id);
+		UserReputation userReputation = new UserReputation();
+		if (user.getUserReputation() == null) {
+			userReputation.setAbsence(points);
+			user.setUserReputation(userReputation);
+		}else {
+			userReputation = user.getUserReputation();
+			userReputation.setAbsence(userReputation.getAbsence()+points);
+		}
 		
+		session.saveOrUpdate(user);
+		
+	}
+	
+	@Transactional 
+	public void deduceAbsence(Long id, int points) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		Users user = session.get(Users.class, id);
+		UserReputation userReputation = new UserReputation();
+		if (user.getUserReputation() == null) {
+			userReputation.setAbsence(points);
+			user.setUserReputation(userReputation);
+		}else {
+			userReputation = user.getUserReputation();
+			userReputation.setAbsence(userReputation.getAbsence()-points);
+		}
+		
+		session.saveOrUpdate(user);
 		
 	}
 	

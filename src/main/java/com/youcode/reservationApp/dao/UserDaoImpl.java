@@ -32,12 +32,15 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	@Transactional
-	public void addUser(Users user) {
+	public Long addUser(Users user) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
 		session.saveOrUpdate(user);
+		
+		Long id = user.getId();
 	
+		return id;
 	}
 
 	@Override

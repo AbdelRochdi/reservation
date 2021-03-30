@@ -29,6 +29,7 @@ public class Reservation implements java.io.Serializable {
 	@Column(name = "state", insertable = false)
 	private String state;
 	private String type;
+	private String presence;
 
 	public Reservation() {
 	}
@@ -79,7 +80,13 @@ public class Reservation implements java.io.Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
+
+	public String getPresence() {
+		return presence;
+	}
+
+	public void setPresence(String presence) {
+		this.presence = presence;
+	}
 
 }

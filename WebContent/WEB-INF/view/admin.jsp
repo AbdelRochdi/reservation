@@ -5,14 +5,12 @@
 <h3>Reservation limit</h3>
 
 <form action="setLimit" method="post">
-<input type="date" name="date" />
-	<input type="number" name="limit" placeholder="limit" />
-	<select name="types" id="">
+	<input type="date" name="date" /> <input type="number" name="limit"
+		placeholder="limit" /> <select name="types" id="">
 		<option value="matin">Matin</option>
 		<option value="soir">Soir</option>
 		<option value="week-end">Week-end</option>
-	</select>
-	<input type="submit" value="Envoyer" />
+	</select> <input type="submit" value="Envoyer" />
 
 </form>
 <table>
@@ -35,139 +33,187 @@
 <h3>Today active reservation List</h3>
 
 <section class="reservations">
+	<c:choose>
+		<c:when test="${today == 'SATURDAY' || today == 'FRIDAY'}">
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+					<th>Presence</th>
+					<th></th>
+					<th></th>
+				</tr>
 
-<table>
-	<tr>
-		<th>Prenom</th>
-		<th>Nom</th>
-		<th>Date</th>
-		<th>Type</th>
-		<th>State</th>
-	</tr>
+				<c:forEach items="${ todayWeekendActiveReservations }"
+					var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+						<td>${ reservation.presence }</td>
+						<td><a
+							href="markPresent?resid=${ reservation.reservationId }&userid=${reservation.user.id}"
+							class="enable">Present</a></td>
+						<td><a
+							href="markAbsent?resid=${ reservation.reservationId }&userid=${reservation.user.id}"
+							class="disable">Absent</a></td>
+					</tr>
+				</c:forEach>
 
-	<c:forEach items="${ todayMatinActiveReservations }" var="reservation">
-		<tr>
-			<td>${ reservation.user.firstName }</td>
-			<td>${ reservation.user.lastName }</td>
-			<td>${ reservation.date }</td>
-			<td>${ reservation.type }</td>
-			<td>${ reservation.state }</td>
-		</tr>
-	</c:forEach>
+			</table>
+		</c:when>
+		<c:otherwise>
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+					<th>Presence</th>
+					<th></th>
+					<th></th>
+				</tr>
 
-</table>
-<table>
-	<tr>
-		<th>Prenom</th>
-		<th>Nom</th>
-		<th>Date</th>
-		<th>Type</th>
-		<th>State</th>
-	</tr>
+				<c:forEach items="${ todayMatinActiveReservations }"
+					var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+						<td>${ reservation.presence }</td>
+						<td><a
+							href="markPresent?resid=${ reservation.reservationId }&userid=${reservation.user.id}"
+							class="enable">Present</a></td>
+						<td><a
+							href="markAbsent?resid=${ reservation.reservationId }&userid=${reservation.user.id}"
+							class="disable">Absent</a></td>
+					</tr>
+				</c:forEach>
 
-	<c:forEach items="${ todaySoirActiveReservations }" var="reservation">
-		<tr>
-			<td>${ reservation.user.firstName }</td>
-			<td>${ reservation.user.lastName }</td>
-			<td>${ reservation.date }</td>
-			<td>${ reservation.type }</td>
-			<td>${ reservation.state }</td>
-		</tr>
-	</c:forEach>
+			</table>
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+					<th>Presence</th>
+					<th></th>
+					<th></th>
+				</tr>
 
-</table>
-<table>
-	<tr>
-		<th>Prenom</th>
-		<th>Nom</th>
-		<th>Date</th>
-		<th>Type</th>
-		<th>State</th>
-	</tr>
+				<c:forEach items="${ todaySoirActiveReservations }"
+					var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+						<td>${ reservation.presence }</td>
+						<td><a
+							href="markPresent?resid=${ reservation.reservationId }&userid=${reservation.user.id}"
+							class="enable">Present</a></td>
+						<td><a
+							href="markAbsent?resid=${ reservation.reservationId }&userid=${reservation.user.id}"
+							class="disable">Absent</a></td>
+					</tr>
+				</c:forEach>
 
-	<c:forEach items="${ todayWeekendActiveReservations }" var="reservation">
-		<tr>
-			<td>${ reservation.user.firstName }</td>
-			<td>${ reservation.user.lastName }</td>
-			<td>${ reservation.date }</td>
-			<td>${ reservation.type }</td>
-			<td>${ reservation.state }</td>
-		</tr>
-	</c:forEach>
+			</table>
+		</c:otherwise>
+	</c:choose>
 
-</table>
+
 </section>
 
 
 
 <h3>Today reservation List</h3>
 <section class="reservations">
-<table>
-	<tr>
-		<th>Prenom</th>
-		<th>Nom</th>
-		<th>Date</th>
-		<th>Type</th>
-		<th>State</th>
-	</tr>
+	<c:choose>
+		<c:when test="${today == 'SATURDAY' || today == 'FRIDAY'}">
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+				</tr>
 
-	<c:forEach items="${ todayMatinReservations }" var="reservation">
-		<tr>
-			<td>${ reservation.user.firstName }</td>
-			<td>${ reservation.user.lastName }</td>
-			<td>${ reservation.date }</td>
-			<td>${ reservation.type }</td>
-			<td>${ reservation.state }</td>
-		</tr>
-	</c:forEach>
+				<c:forEach items="${ todayWeekendReservations }" var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+					</tr>
+				</c:forEach>
 
-</table>
-<table>
-	<tr>
-		<th>Prenom</th>
-		<th>Nom</th>
-		<th>Date</th>
-		<th>Type</th>
-		<th>State</th>
-	</tr>
+			</table>
+		</c:when>
+		<c:otherwise>
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+				</tr>
 
-	<c:forEach items="${ todaySoirReservations }" var="reservation">
-		<tr>
-			<td>${ reservation.user.firstName }</td>
-			<td>${ reservation.user.lastName }</td>
-			<td>${ reservation.date }</td>
-			<td>${ reservation.type }</td>
-			<td>${ reservation.state }</td>
-		</tr>
-	</c:forEach>
+				<c:forEach items="${ todayMatinReservations }" var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+					</tr>
+				</c:forEach>
 
-</table>
-<table>
-	<tr>
-		<th>Prenom</th>
-		<th>Nom</th>
-		<th>Date</th>
-		<th>Type</th>
-		<th>State</th>
-	</tr>
+			</table>
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+				</tr>
 
-	<c:forEach items="${ todayWeekendReservations }" var="reservation">
-		<tr>
-			<td>${ reservation.user.firstName }</td>
-			<td>${ reservation.user.lastName }</td>
-			<td>${ reservation.date }</td>
-			<td>${ reservation.type }</td>
-			<td>${ reservation.state }</td>
-		</tr>
-	</c:forEach>
+				<c:forEach items="${ todaySoirReservations }" var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+					</tr>
+				</c:forEach>
 
-</table>
+			</table>
+		</c:otherwise>
+	</c:choose>
+
+
 </section>
 
 <h3>Users reservation History</h3>
 
 <input type="text" placeholder="Search" />
-<input type="submit" value="Search"/>
+<input type="submit" value="Search" />
 
 
 <table>
@@ -211,7 +257,8 @@
 			<td>${ user.email }</td>
 			<td>${ user.role }</td>
 			<td>${ user.state }</td>
-			<td><a href="activateUser?id=${ user.id }" class="${ user.state == 'active' ? 'disable' : 'enable' }">${ user.state == 'active' ? 'Désactiver' : 'Activer' }</a></td>
+			<td><a href="activateUser?id=${ user.id }"
+				class="${ user.state == 'active' ? 'disable' : 'enable' }">${ user.state == 'active' ? 'Désactiver' : 'Activer' }</a></td>
 		</tr>
 	</c:forEach>
 

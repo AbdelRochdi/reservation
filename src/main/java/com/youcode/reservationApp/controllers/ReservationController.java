@@ -35,6 +35,34 @@ public class ReservationController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	public void reservationConfirmation(List<Reservation> todayReservations, ReservationLimit todayReservationLimit) {
+		todayReservations.sort(Comparator.comparing(Reservation::getDate));
+		int i = 0;
+		ArrayList<Long> ids = new ArrayList<Long>();
+		
+		for (int k = 0; k <= 21; k++) {
+			for (int j = 0; j < todayReservations.size(); j++) {
+				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < todayReservationLimit.getReservationLimit()) {
+					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
+						System.out.println(i);
+						todayReservations.get(j).setState("active");
+						reservationDao.updateReservation(todayReservations.get(j));
+						i++;
+						ids.add(todayReservations.get(j).getReservationId());
+						System.out.println(i);
+					}	
+				} else{
+					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
+					todayReservations.get(j).setState("inactive");
+					reservationDao.updateReservation(todayReservations.get(j));
+					}
+				}
+			}
+			
+		}
+	}
+
 
 	// controller method to show the reservation page
 
@@ -59,9 +87,7 @@ public class ReservationController {
 				System.out.println("matin is null");
 			}else {
 				System.out.println(matin.getType() + matin.getDate());
-			}
-			
-			
+			}		
 			
 			theModel.addAttribute("matin", matin);
 			theModel.addAttribute("soir", soir);
@@ -86,41 +112,19 @@ public class ReservationController {
 		
 		reservationDao.addReservation(userId,type);
 		
-		if (type.equals("matin")) {
-			userRepository.addPresence(userId, 2);
-		}else if (type.equals("soir")) {
-			userRepository.addPresence(userId, 1);
-		}else if (type.equals("week-end")) {
-			userRepository.addPresence(userId, 3);
-		}
 		
-		ReservationLimit todayReservationLimit = reservationRepository.getTodayReservationLimit("matin");
-		List<Reservation> todayReservations = reservationRepository.getAllReservationsTodayByType("matin");
 		
-		todayReservations.sort(Comparator.comparing(Reservation::getDate));
-		int i = 0;
-		ArrayList<Long> ids = new ArrayList<Long>();
-		
-		for (int k = 0; k <= 21; k++) {
-			for (int j = 0; j < todayReservations.size(); j++) {
-				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < todayReservationLimit.getReservationLimit()) {
-					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-						System.out.println(i);
-						todayReservations.get(j).setState("active");
-						reservationDao.updateReservation(todayReservations.get(j));
-						i++;
-						ids.add(todayReservations.get(j).getReservationId());
-						System.out.println(i);
-					}	
-				} else{
-					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-					todayReservations.get(j).setState("inactive");
-					reservationDao.updateReservation(todayReservations.get(j));
-					}
-				}
-			}
-			
-		}
+		List<Reservation> todayMatinReservations = reservationRepository.getAllReservationsTodayByType("matin");
+		List<Reservation> todaySoirReservations = reservationRepository.getAllReservationsTodayByType("soir");
+		List<Reservation> todayWeekendReservations = reservationRepository.getAllReservationsTodayByType("week-end");
+
+		ReservationLimit todayMatinReservationLimit = reservationRepository.getTodayReservationLimit("matin");
+		ReservationLimit todaySoirReservationLimit = reservationRepository.getTodayReservationLimit("soir");
+		ReservationLimit todayWeekendReservationLimit = reservationRepository.getTodayReservationLimit("week-end");
+
+		reservationConfirmation(todayWeekendReservations, todayWeekendReservationLimit);
+		reservationConfirmation(todayMatinReservations, todayMatinReservationLimit);
+		reservationConfirmation(todaySoirReservations, todaySoirReservationLimit);
 
 		return "redirect:/reservation";
 	}
@@ -133,41 +137,17 @@ public class ReservationController {
 		
 		reservationRepository.deleteReservationByTypeById(userId,type);
 		
-		if (type.equals("matin")) {
-			userRepository.deducePresence(userId, 2);
-		}else if (type.equals("soir")) {
-			userRepository.deducePresence(userId, 1);
-		}else if (type.equals("week-end")) {
-			userRepository.deducePresence(userId, 3);
-		}
-		
-		ReservationLimit todayReservationLimit = reservationRepository.getTodayReservationLimit("matin");
-		List<Reservation> todayReservations = reservationRepository.getAllReservationsTodayByType("matin");
-		
-		todayReservations.sort(Comparator.comparing(Reservation::getDate));
-		int i = 0;
-		ArrayList<Long> ids = new ArrayList<Long>();
-		
-		for (int k = 0; k <= 21; k++) {
-			for (int j = 0; j < todayReservations.size(); j++) {
-				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < todayReservationLimit.getReservationLimit()) {
-					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-						System.out.println(i);
-						todayReservations.get(j).setState("active");
-						reservationDao.updateReservation(todayReservations.get(j));
-						i++;
-						ids.add(todayReservations.get(j).getReservationId());
-						System.out.println(i);
-					}	
-				} else{
-					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
-					todayReservations.get(j).setState("inactive");
-					reservationDao.updateReservation(todayReservations.get(j));
-					}
-				}
-			}
-			
-		}
+		List<Reservation> todayMatinReservations = reservationRepository.getAllReservationsTodayByType("matin");
+		List<Reservation> todaySoirReservations = reservationRepository.getAllReservationsTodayByType("soir");
+		List<Reservation> todayWeekendReservations = reservationRepository.getAllReservationsTodayByType("week-end");
+
+		ReservationLimit todayMatinReservationLimit = reservationRepository.getTodayReservationLimit("matin");
+		ReservationLimit todaySoirReservationLimit = reservationRepository.getTodayReservationLimit("soir");
+		ReservationLimit todayWeekendReservationLimit = reservationRepository.getTodayReservationLimit("week-end");
+
+		reservationConfirmation(todayWeekendReservations, todayWeekendReservationLimit);
+		reservationConfirmation(todayMatinReservations, todayMatinReservationLimit);
+		reservationConfirmation(todaySoirReservations, todaySoirReservationLimit);
 
 		return "redirect:/reservation";
 	}
