@@ -82,6 +82,21 @@ public class ReservationRepository {
 
 		List reservations = new ArrayList<Reservation>();
 		
+		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE() and r.state = 'active' and r.type=:type");
+		query.setParameter("type", type);
+
+		reservations = query.getResultList();
+ 
+		return reservations;
+	}
+	
+	@Transactional
+	public List<Reservation> getAllActiveReservationsTomorrow(String type) {
+		
+		Session session = sessionFactory.getCurrentSession();
+
+		List reservations = new ArrayList<Reservation>();
+		
 		Query query = session.createQuery("from Reservation r where DATE(r.date) = CURDATE()+1 and r.state = 'active' and r.type=:type");
 		query.setParameter("type", type);
 

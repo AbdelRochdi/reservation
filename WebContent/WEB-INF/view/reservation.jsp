@@ -59,6 +59,88 @@ would you like to make a reservation for tomorrow ?
 	</c:otherwise>
 </c:choose>
 
+<h3>Today active reservation List</h3>
+
+<section class="reservations">
+	<c:choose>
+		<c:when test="${today == 'SATURDAY' || today == 'FRIDAY' && now >= 20 || today == 'SUNDAY' && now < 20 }">
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+					<th>Presence</th>
+				</tr>
+
+				<c:forEach items="${ now >= 20 ? tomorrowWeekendActiveReservations : todayWeekendActiveReservations }"
+					var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+						<td>${ reservation.presence }</td>
+					</tr>
+				</c:forEach>
+
+			</table>
+		</c:when>
+		<c:otherwise>
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+					<th>Presence</th>
+				</tr>
+
+				<c:forEach items="${now >= 20 ? tomorrowMatinActiveReservations : todayMatinActiveReservations }"
+					var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+						<td>${ reservation.presence }</td>
+					</tr>
+				</c:forEach>
+
+			</table>
+			<table>
+				<tr>
+					<th>Prenom</th>
+					<th>Nom</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>State</th>
+					<th>Presence</th>
+				</tr>
+
+				<c:forEach items="${now >= 20 ? tomorrowSoirActiveReservations : todaySoirActiveReservations }"
+					var="reservation">
+					<tr>
+						<td>${ reservation.user.firstName }</td>
+						<td>${ reservation.user.lastName }</td>
+						<td>${ reservation.date }</td>
+						<td>${ reservation.type }</td>
+						<td>${ reservation.state }</td>
+						<td>${ reservation.presence }</td>
+					</tr>
+				</c:forEach>
+
+			</table>
+		</c:otherwise>
+	</c:choose>
+
+
+</section>
+
 
 <h2>Historique de reservations</h2>
 

@@ -78,7 +78,7 @@ public class UserRepository {
 
 		List reservationLimit = new ArrayList<ReservationLimit>();
 		
-		Query query = session.createQuery("from ReservationLimit r order by r.date desc");
+		Query query = session.createQuery("from ReservationLimit r where DATE(r.date) > CURDATE() order by r.date desc");
 		
 		reservationLimit = query.getResultList();
  

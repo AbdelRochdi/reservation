@@ -1,6 +1,7 @@
 package com.youcode.reservationApp.controllers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -41,9 +42,17 @@ public class ReservationController {
 		int i = 0;
 		ArrayList<Long> ids = new ArrayList<Long>();
 		
+		int reservationLimit;
+
+		if (todayReservationLimit.getReservationLimit() == 0 && todayReservationLimit.getDate() == null) {
+			reservationLimit = 3;
+		} else {
+			reservationLimit = todayReservationLimit.getReservationLimit();
+		}
+		
 		for (int k = 0; k <= 21; k++) {
 			for (int j = 0; j < todayReservations.size(); j++) {
-				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < todayReservationLimit.getReservationLimit()) {
+				if (todayReservations.get(j).getUser().getUserReputation().getPresence() < k && i < reservationLimit) {
 					if (ids.indexOf(todayReservations.get(j).getReservationId()) == -1) {
 						System.out.println(i);
 						todayReservations.get(j).setState("active");
@@ -79,21 +88,39 @@ public class ReservationController {
 			reservations = reservationRepository.getAllReservationsById(userId);
 			
 			String today = LocalDate.now().getDayOfWeek().name();
+			int now = LocalDateTime.now().getHour();
+			
+			
+			
 			Reservation matin = reservationRepository.getReservationByTypeById(userId, "matin");
 			Reservation soir = reservationRepository.getReservationByTypeById(userId, "soir");
 			Reservation weekend = reservationRepository.getReservationByTypeById(userId, "week-end");
 			
-			if (matin == null) {
-				System.out.println("matin is null");
-			}else {
-				System.out.println(matin.getType() + matin.getDate());
-			}		
+			List<Reservation> todayMatinActiveReservations = reservationRepository
+					.getAllActiveReservationsToday("matin");
+			List<Reservation> todaySoirActiveReservations = reservationRepository.getAllActiveReservationsToday("soir");
+			List<Reservation> todayWeekendActiveReservations = reservationRepository
+					.getAllActiveReservationsToday("week-end");
+			List<Reservation> tomorrowMatinActiveReservations = reservationRepository
+					.getAllActiveReservationsTomorrow("matin");
+			List<Reservation> tomorrowSoirActiveReservations = reservationRepository.getAllActiveReservationsTomorrow("soir");
+			List<Reservation> tomorrowWeekendActiveReservations = reservationRepository
+					.getAllActiveReservationsTomorrow("week-end");
 			
+			
+			
+			theModel.addAttribute("todayMatinActiveReservations", todayMatinActiveReservations);
+			theModel.addAttribute("todaySoirActiveReservations", todaySoirActiveReservations);
+			theModel.addAttribute("todayWeekendActiveReservations", todayWeekendActiveReservations);
+			theModel.addAttribute("tomorrowMatinActiveReservations", tomorrowMatinActiveReservations);
+			theModel.addAttribute("tomorrowSoirActiveReservations", tomorrowSoirActiveReservations);
+			theModel.addAttribute("tomorrowWeekendActiveReservations", tomorrowWeekendActiveReservations);
 			theModel.addAttribute("matin", matin);
 			theModel.addAttribute("soir", soir);
 			theModel.addAttribute("weekend", weekend);
 			theModel.addAttribute("reservations", reservations);
 			theModel.addAttribute("today",today);
+			theModel.addAttribute("now",now);
 			theModel.addAttribute("name", user.getFirstName());
 
 			return "reservation";
