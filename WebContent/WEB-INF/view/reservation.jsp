@@ -71,7 +71,6 @@ would you like to make a reservation for tomorrow ?
 					<th>Date</th>
 					<th>Type</th>
 					<th>State</th>
-					<th>Presence</th>
 				</tr>
 
 				<c:forEach items="${ now >= 20 ? tomorrowWeekendActiveReservations : todayWeekendActiveReservations }"
@@ -82,7 +81,6 @@ would you like to make a reservation for tomorrow ?
 						<td>${ reservation.date }</td>
 						<td>${ reservation.type }</td>
 						<td>${ reservation.state }</td>
-						<td>${ reservation.presence }</td>
 					</tr>
 				</c:forEach>
 
@@ -96,7 +94,6 @@ would you like to make a reservation for tomorrow ?
 					<th>Date</th>
 					<th>Type</th>
 					<th>State</th>
-					<th>Presence</th>
 				</tr>
 
 				<c:forEach items="${now >= 20 ? tomorrowMatinActiveReservations : todayMatinActiveReservations }"
@@ -107,7 +104,6 @@ would you like to make a reservation for tomorrow ?
 						<td>${ reservation.date }</td>
 						<td>${ reservation.type }</td>
 						<td>${ reservation.state }</td>
-						<td>${ reservation.presence }</td>
 					</tr>
 				</c:forEach>
 
@@ -119,7 +115,6 @@ would you like to make a reservation for tomorrow ?
 					<th>Date</th>
 					<th>Type</th>
 					<th>State</th>
-					<th>Presence</th>
 				</tr>
 
 				<c:forEach items="${now >= 20 ? tomorrowSoirActiveReservations : todaySoirActiveReservations }"
@@ -130,7 +125,6 @@ would you like to make a reservation for tomorrow ?
 						<td>${ reservation.date }</td>
 						<td>${ reservation.type }</td>
 						<td>${ reservation.state }</td>
-						<td>${ reservation.presence }</td>
 					</tr>
 				</c:forEach>
 
@@ -149,7 +143,7 @@ would you like to make a reservation for tomorrow ?
 		<th>Date</th>
 		<th>Type</th>
 		<th>State</th>
-
+		<th>Presence</th>
 	</tr>
 
 	<c:forEach items="${ reservations }" var="reservation">
@@ -157,6 +151,7 @@ would you like to make a reservation for tomorrow ?
 			<td>${ reservation.date }</td>
 			<td>${ reservation.type }</td>
 			<td>${ reservation.state }</td>
+			<td>${ reservation.presence }</td>
 		</tr>
 	</c:forEach>
 
