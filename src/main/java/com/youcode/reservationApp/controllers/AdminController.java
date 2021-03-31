@@ -2,8 +2,6 @@ package com.youcode.reservationApp.controllers;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,7 +81,7 @@ public class AdminController {
 
 		userDao.addUser(user);
 
-		return "redirect:/admin";
+		return "redirect:/users";
 	}
 
 	@RequestMapping("/setLimit")
@@ -97,7 +95,7 @@ public class AdminController {
 
 		userRepository.setLimit(limit, type, date);
 
-		return "redirect:/admin";
+		return "redirect:/adminReservations";
 	}
 
 	@RequestMapping("/markPresent")

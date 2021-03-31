@@ -1,9 +1,11 @@
+<%@page import="java.time.LocalDate"%>
 <%@ include file="header.jsp"%>
 <h1>Reservation limit</h1>
 <section class="reservationLimit">
 <form action="setLimit" method="post" class="limitForm">
-	<input type="date" name="date" /> <input type="number" name="limit"
-		placeholder="Limit" /> <select name="types" id="">
+	<input type="date" name="date" min="<%= LocalDate.now() %>" required="required"/> 
+	<input type="number" name="limit" placeholder="Limit" required="required"/> 
+		<select name="types" id="">
 		<option value="matin">Matin</option>
 		<option value="soir">Soir</option>
 		<option value="week-end">Week-end</option>
