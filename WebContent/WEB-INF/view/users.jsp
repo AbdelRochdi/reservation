@@ -1,6 +1,6 @@
 <%@ include file="header.jsp"%>
 
-<h3>Users list</h3>
+<h1>Users list</h1>
 
 <table>
 	<tr>
@@ -26,10 +26,11 @@
 
 </table>
 
-<h3>Users reservation History</h3>
+<h1>Users reservation History</h1>
 
-<input type="text" placeholder="Search" />
-<input type="submit" value="Search" />
+
+<!-- <input type="text" placeholder="Search" />
+<input type="submit" value="Search" /> -->
 
 
 <table>

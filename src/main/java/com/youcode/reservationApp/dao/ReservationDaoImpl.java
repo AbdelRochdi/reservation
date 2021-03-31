@@ -90,7 +90,7 @@ public class ReservationDaoImpl implements ReservationDao {
 
 		List reservations = new ArrayList<Reservation>();
 		
-		Query query = session.createQuery("from Reservation");
+		Query query = session.createQuery("from Reservation r order by r.date desc ");
 		
 		reservations = query.getResultList();
  

@@ -1,23 +1,44 @@
-<%@ include file="header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ReservationApp</title>
+<link rel="stylesheet" type="text/css"
+	href="${ pageContext.request.contextPath }/resources/style.css">
+</head>
+<body class="admin">
 
-<h2>Welcome ${ name }</h2>
+	<header class="header">
+
+		<img src="${ pageContext.request.contextPath }/resources/logo.png"
+			alt="logo" class="logo">
+		<ul class="menu">
+			<li><a href="logout" class="logout">Logout</a></li>
+		</ul>
+
+	</header>
+
 <c:if test="${ now >= 9 &&  now < 20 }">
-would you like to make a reservation for tomorrow ?
-
+<h3>Voulez vous reservez pour ajourd'hui ?</h3>
+<section class="makeRes">
 <c:choose>
 	<c:when test="${today == 'SATURDAY' || today == 'FRIDAY'}">
 		<c:choose>
 			<c:when test="${ empty weekend.type }">
 				<form action="makeReservation" method="post">
 					<input type="hidden" name="type" value="week-end" /> <input
-						type="submit" value="Réserver"
+						type="submit" value="RÃ©server" class="limiter" style="padding: 0.4rem; margin: 0.4rem"
 						onclick="if (!(confirm('are you sure about that ?'))) return false" />
 				</form>
 			</c:when>
 			<c:otherwise>
 				<form action="cancelReservation" method="post">
 					<input type="hidden" name="type" value="week-end" /> <input
-						type="submit" value="Annuler"
+						type="submit" value="Annuler" class="annuler" style="padding: 0.4rem; margin: 0.4rem"
 						onclick="if (!(confirm('are you sure about that ?'))) return false" />
 				</form>
 			</c:otherwise>
@@ -25,18 +46,19 @@ would you like to make a reservation for tomorrow ?
 	</c:when>
 
 	<c:otherwise>
+	<div class="resChoices">
 		<c:choose>
 			<c:when test="${ empty matin.type }">
 				<form action="makeReservation" method="post">
 					<input type="hidden" name="type" value="matin" /> <input
-						type="submit" value="Réserver le matin"
+						type="submit" value="RÃ©server le matin" class="limiter" style="padding: 0.4rem; margin: 0.4rem"
 						onclick="if (!(confirm('are you sure about that ?'))) return false" />
 				</form>
 			</c:when>
 			<c:otherwise>
 				<form action="cancelReservation" method="post">
 					<input type="hidden" name="type" value="matin" /> <input
-						type="submit" value="Annuler le matin"
+						type="submit" value="Annuler le matin" class="annuler" style="padding: 0.4rem; margin: 0.4rem"
 						onclick="if (!(confirm('are you sure about that ?'))) return false" />
 				</form>
 			</c:otherwise>
@@ -45,20 +67,22 @@ would you like to make a reservation for tomorrow ?
 			<c:when test="${ empty soir.type  }">
 				<form action="makeReservation" method="post">
 					<input type="hidden" name="type" value="soir" /> <input
-						type="submit" value="Réserver le soir"
+						type="submit" value="RÃ©server le soir" class="limiter" style="padding: 0.4rem; margin: 0.4rem"
 						onclick="if (!(confirm('are you sure about that ?'))) return false" />
 				</form>
 			</c:when>
 			<c:otherwise>
 				<form action="cancelReservation" method="post">
 					<input type="hidden" name="type" value="soir" /> <input
-						type="submit" value="Annuler le soir"
+						type="submit" value="Annuler le soir" class="annuler" style="padding: 0.4rem; margin: 0.4rem"
 						onclick="if (!(confirm('are you sure about that ?'))) return false" />
 				</form>
 			</c:otherwise>
 		</c:choose>
+		</div>
 	</c:otherwise>
 </c:choose>
+</section>
 </c:if>
 
 
@@ -140,7 +164,7 @@ would you like to make a reservation for tomorrow ?
 </section>
 
 
-<h2>Historique de reservations</h2>
+<h3>Historique de reservations</h3>
 
 <table>
 	<tr>
@@ -161,8 +185,4 @@ would you like to make a reservation for tomorrow ?
 
 </table>
 
-
-
-
-</body>
-</html>
+<%@ include file="footer.jsp"%>

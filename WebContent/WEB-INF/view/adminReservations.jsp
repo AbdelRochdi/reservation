@@ -1,17 +1,16 @@
 <%@ include file="header.jsp"%>
-
-<h3>Reservation limit</h3>
-
-<form action="setLimit" method="post">
+<h1>Reservation limit</h1>
+<section class="reservationLimit">
+<form action="setLimit" method="post" class="limitForm">
 	<input type="date" name="date" /> <input type="number" name="limit"
-		placeholder="limit" /> <select name="types" id="">
+		placeholder="Limit" /> <select name="types" id="">
 		<option value="matin">Matin</option>
 		<option value="soir">Soir</option>
 		<option value="week-end">Week-end</option>
-	</select> <input type="submit" value="Envoyer" />
+	</select> <input type="submit" value="Limiter" class="limiter" />
 
 </form>
-<table>
+<table class="rlTable">
 	<tr>
 		<th>Date</th>
 		<th>Reservation limit</th>
@@ -27,8 +26,13 @@
 	</c:forEach>
 
 </table>
+</section>
 
-<h3>Today reservation List</h3>
+
+
+
+
+<h1>Today reservation List</h1>
 <section class="reservations">
 	<c:choose>
 		<c:when test="${today == 'SATURDAY' || today == 'FRIDAY'}">

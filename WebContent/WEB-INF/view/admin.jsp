@@ -1,11 +1,12 @@
 <%@ include file="header.jsp"%>
-<h1>Welcome to Admin</h1>
 
-<h3>Today active reservation List</h3>
+
+<h1>Today active reservation List</h1>
 
 <section class="activeReservations">
 	<c:choose>
 		<c:when test="${today == 'SATURDAY' || today == 'FRIDAY'}">
+		<h2>Week-end</h2>
 			<table>
 				<tr>
 					<th>Prenom</th>
@@ -39,6 +40,7 @@
 			</table>
 		</c:when>
 		<c:otherwise>
+		<h2>Matin</h2>
 			<table>
 				<tr>
 					<th>Prenom</th>
@@ -70,6 +72,7 @@
 				</c:forEach>
 
 			</table>
+			<h2>Soir</h2>
 			<table>
 				<tr>
 					<th>Prenom</th>
@@ -106,12 +109,6 @@
 
 
 </section>
-
-
-
-
-
-
 
 <%@ include file="footer.jsp"%>
 
