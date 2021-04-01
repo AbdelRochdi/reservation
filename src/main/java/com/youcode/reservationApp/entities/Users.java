@@ -13,6 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern.Flag;
+import javax.validation.constraints.Size;
+
+
 
 @Entity
 public class Users implements java.io.Serializable {
@@ -21,10 +27,18 @@ public class Users implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "first_name")
+	@NotNull(message = "Veuillez entrer un prenom")
+	@Size(min = 1, message = "Veuillez entrer un prenom")
 	private String firstName;
 	@Column(name = "last_name")
+	@NotNull(message = "Veuillez entrer un nom")
+	@Size(min = 1, message = "Veuillez entrer un nom")
 	private String lastName;
+	@NotNull(message = "Veuillez entrer un Email")
+	@Pattern(regexp = ".*(@student.youcode.ma$)",flags =Flag.CASE_INSENSITIVE , message = "veuillez entrer l'email de youcode")
 	private String email;
+	@NotNull(message = "Veuillez entrer un Mot de passe")
+	@Size(min = 8, message = "Le mot de passe doit etre au minimum de 8 caracteres")
 	private String password;
 	private String role;
 	private String state;

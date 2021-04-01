@@ -28,15 +28,20 @@
 			class="form">
 
 			<form:input type="text" path="firstName" placeholder="Prenom" />
+			<form:errors path="firstName" cssClass="error" />
 			<form:input type="text" path="lastName" placeholder="Nom" />
+			<form:errors path="lastName" cssClass="error" />
+			
 			<form:input type="text" path="email" placeholder="Email" />
+			<form:errors path="email" cssClass="error" />
+			
 			<form:input type="hidden" path="role" value="apprenant" />
 			<form:input type="hidden" path="state" value="inactive" />
-			<form:input type="password" path="password"
-				placeholder="Mot de passe" />
+			<form:input type="password" path="password"	placeholder="Mot de passe" />
+			<form:errors path="password" cssClass="error" />
+		
 			<input type="password" placeholder="Confirmez le mot de passe" />
-			<input type="submit" value="S'inscrire" class="login"
-				style="height: 38px" />
+			<input type="submit" value="S'inscrire" class="login" style="height: 38px" />
 
 			<h4>OU</h4>
 

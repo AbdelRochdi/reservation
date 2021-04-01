@@ -1,6 +1,6 @@
 <%@ include file="header.jsp"%>
 
-<h1>Users list</h1>
+<h1>Liste des utilisateurs</h1>
 
 <table>
 	<tr>

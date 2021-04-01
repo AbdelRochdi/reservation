@@ -21,7 +21,7 @@
 
 
 <section class="loginSection">
-
+<h2>Inscription Complete veuillez vous connecter pour continuer</h2>
 <h1>Connectez-vous </h1>
 
 <form action="loginProcess" method="post" class="form">

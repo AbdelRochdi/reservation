@@ -3,6 +3,7 @@ package com.youcode.reservationApp.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +54,7 @@ public class LoginController {
 		Users users = userRepository.getByEmail(email);
 		
 		if (users != null) {
-			if (password.equals(users.getPassword())) {
+			if (BCrypt.checkpw(password, users.getPassword())) {
 				
 				if (users.getRole().equals("admin")) {
 					session.setAttribute("id", users.getId());

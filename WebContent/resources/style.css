@@ -107,6 +107,7 @@ a {
 	background-color: red;
 	border-radius: 0.6em;
 	padding: 0.5em 0.7em;
+	color: white;
 }
 
 .login {
@@ -235,4 +236,12 @@ footer {
 	justify-content: space-between;
 	margin: 0 auto;
 	width: 22%;
+}
+
+.error {
+	background-color: red;
+	border-radius: 0.6em;
+	padding: 0.2em 0.7em;
+	color: white;
+	font-size: 0.8rem;
 }
