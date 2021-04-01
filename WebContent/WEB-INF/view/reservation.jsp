@@ -17,10 +17,17 @@
 		<img src="${ pageContext.request.contextPath }/resources/logo.png"
 			alt="logo" class="logo">
 		<ul class="menu">
-			<li><a href="logout" class="logout">Logout</a></li>
+			<li><a href="logout" class="logout">Se Déconnecter</a></li>
 		</ul>
 
 	</header>
+
+<c:if test="${ now < 9 &&  now >= 20 }">
+
+	<h3>Fin des réservations pour ajourd'hui, revenez demain ?</h3>
+
+</c:if>
+
 
 <c:if test="${ now >= 9 &&  now < 20 }">
 <h3>Voulez vous reservez pour ajourd'hui ?</h3>
@@ -32,14 +39,14 @@
 				<form action="makeReservation" method="post">
 					<input type="hidden" name="type" value="week-end" /> <input
 						type="submit" value="Réserver" class="limiter" style="padding: 0.4rem; margin: 0.4rem"
-						onclick="if (!(confirm('are you sure about that ?'))) return false" />
+						onclick="if (!(confirm('Etes-vous sur de vouloir resérver ?'))) return false" />
 				</form>
 			</c:when>
 			<c:otherwise>
 				<form action="cancelReservation" method="post">
 					<input type="hidden" name="type" value="week-end" /> <input
 						type="submit" value="Annuler" class="annuler" style="padding: 0.4rem; margin: 0.4rem"
-						onclick="if (!(confirm('are you sure about that ?'))) return false" />
+						onclick="if (!(confirm('Etes-vous sur de vouloir annuler ?'))) return false" />
 				</form>
 			</c:otherwise>
 		</c:choose>
@@ -52,14 +59,14 @@
 				<form action="makeReservation" method="post">
 					<input type="hidden" name="type" value="matin" /> <input
 						type="submit" value="Réserver le matin" class="limiter" style="padding: 0.4rem; margin: 0.4rem"
-						onclick="if (!(confirm('are you sure about that ?'))) return false" />
+						onclick="if (!(confirm('Etes-vous sur de vouloir resérver ?'))) return false" />
 				</form>
 			</c:when>
 			<c:otherwise>
 				<form action="cancelReservation" method="post">
 					<input type="hidden" name="type" value="matin" /> <input
 						type="submit" value="Annuler le matin" class="annuler" style="padding: 0.4rem; margin: 0.4rem"
-						onclick="if (!(confirm('are you sure about that ?'))) return false" />
+						onclick="if (!(confirm('Etes-vous sur de vouloir annuler ?'))) return false" />
 				</form>
 			</c:otherwise>
 		</c:choose>
@@ -68,14 +75,14 @@
 				<form action="makeReservation" method="post">
 					<input type="hidden" name="type" value="soir" /> <input
 						type="submit" value="Réserver le soir" class="limiter" style="padding: 0.4rem; margin: 0.4rem"
-						onclick="if (!(confirm('are you sure about that ?'))) return false" />
+						onclick="if (!(confirm('Etes-vous sur de vouloir resérver ?'))) return false" />
 				</form>
 			</c:when>
 			<c:otherwise>
 				<form action="cancelReservation" method="post">
 					<input type="hidden" name="type" value="soir" /> <input
 						type="submit" value="Annuler le soir" class="annuler" style="padding: 0.4rem; margin: 0.4rem"
-						onclick="if (!(confirm('are you sure about that ?'))) return false" />
+						onclick="if (!(confirm('Etes-vous sur de vouloir annuler ? ?'))) return false" />
 				</form>
 			</c:otherwise>
 		</c:choose>
@@ -86,8 +93,15 @@
 </c:if>
 
 
+<c:choose>
+<c:when test="${ now < 20 }">
+<h3>Liste Finale d'aujourd'hui</h3>
+</c:when>
+<c:otherwise>
+<h3>Liste Finale de demain</h3>
+</c:otherwise>
+</c:choose>
 
-<h3>Today active reservation List</h3>
 
 <section class="reservations">
 	<c:choose>

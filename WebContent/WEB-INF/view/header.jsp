@@ -17,10 +17,10 @@
 		<img src="${ pageContext.request.contextPath }/resources/logo.png"
 			alt="logo" class="logo">
 		<ul class="menu">
-			<li><a href="admin">Active list</a></li>
+			<li><a href="admin">Liste Active</a></li>
 			<li><a href="adminReservations">Reservations</a></li>
-			<li><a href="users">Users</a></li>
-			<li><a href="logout" class="logout">Logout</a></li>
+			<li><a href="users">Utilisateurs</a></li>
+			<li><a href="logout" class="logout">Se Déconnecter</a></li>
 		</ul>
 
 

@@ -1,7 +1,7 @@
 <%@ include file="header.jsp"%>
 
 
-<h1>Today active reservation List</h1>
+<h1>Liste de reservations d'ajourd'hui</h1>
 
 <section class="activeReservations">
 	<c:choose>
@@ -13,7 +13,7 @@
 					<th>Nom</th>
 					<th>Date</th>
 					<th>Type</th>
-					<th>State</th>
+					<th>Etat</th>
 					<th>Presence</th>
 					<th></th>
 					<th></th>
@@ -47,7 +47,7 @@
 					<th>Nom</th>
 					<th>Date</th>
 					<th>Type</th>
-					<th>State</th>
+					<th>Etat</th>
 					<th>Presence</th>
 					<th></th>
 					<th></th>
@@ -79,7 +79,7 @@
 					<th>Nom</th>
 					<th>Date</th>
 					<th>Type</th>
-					<th>State</th>
+					<th>Etat</th>
 					<th>Presence</th>
 					<th></th>
 					<th></th>

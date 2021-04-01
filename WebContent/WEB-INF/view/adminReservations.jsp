@@ -15,7 +15,7 @@
 <table class="rlTable">
 	<tr>
 		<th>Date</th>
-		<th>Reservation limit</th>
+		<th>Limite de places</th>
 		<th>Type</th>
 	</tr>
 
@@ -34,7 +34,7 @@
 
 
 
-<h1>Today reservation List</h1>
+<h1>Liste de reservations de demain</h1>
 <section class="reservations">
 	<c:choose>
 		<c:when test="${today == 'SATURDAY' || today == 'FRIDAY'}">
@@ -44,7 +44,7 @@
 					<th>Nom</th>
 					<th>Date</th>
 					<th>Type</th>
-					<th>State</th>
+					<th>Etat</th>
 				</tr>
 
 				<c:forEach items="${ todayWeekendReservations }" var="reservation">
@@ -66,7 +66,7 @@
 					<th>Nom</th>
 					<th>Date</th>
 					<th>Type</th>
-					<th>State</th>
+					<th>Etat</th>
 				</tr>
 
 				<c:forEach items="${ todayMatinReservations }" var="reservation">
@@ -86,7 +86,7 @@
 					<th>Nom</th>
 					<th>Date</th>
 					<th>Type</th>
-					<th>State</th>
+					<th>Etat</th>
 				</tr>
 
 				<c:forEach items="${ todaySoirReservations }" var="reservation">

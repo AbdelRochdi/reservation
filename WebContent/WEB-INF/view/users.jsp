@@ -8,7 +8,7 @@
 		<th>Nom</th>
 		<th>Email</th>
 		<th>Role</th>
-		<th>State</th>
+		<th>Etat</th>
 		<th>Action</th>
 	</tr>
 
@@ -26,12 +26,10 @@
 
 </table>
 
-<h1>Users reservation History</h1>
-
+<h1>Historique de reservations des utilisateurs</h1>
 
 <!-- <input type="text" placeholder="Search" />
 <input type="submit" value="Search" /> -->
-
 
 <table>
 	<tr>
@@ -39,7 +37,7 @@
 		<th>Nom</th>
 		<th>Date</th>
 		<th>Type</th>
-		<th>State</th>
+		<th>Etat</th>
 	</tr>
 
 	<c:forEach items="${ reservations }" var="reservation">
