@@ -81,7 +81,7 @@ public class RegisterController {
 				
 				model.addAttribute("message", "Inscription Complete veuillez vous connecter pour continuer");
 				
-				userRepository.sendEmail(users);
+				userRepository.sendEmail(users,"Tu as été enregistré avec succes");
 
 				return "index";
 			}

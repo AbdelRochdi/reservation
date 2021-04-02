@@ -17,8 +17,11 @@
 		<img src="${ pageContext.request.contextPath }/resources/logo.png"
 			alt="logo" class="logo">
 		<ul class="menu">
-			<li><a href="logout" class="logout">Se Déconnecter</a></li>
+			<li class="profile">${ user.firstName } ${ user.lastName }</li>
+			<li><a href="logout" class="logout">Logout</a></li>
 		</ul>
+		
+		
 
 	</header>
 
@@ -113,8 +116,12 @@
 
 
 <section class="reservations">
+
 	<c:choose>
+	
 		<c:when test="${today == 'SATURDAY' || today == 'FRIDAY' && now >= 20 || today == 'SUNDAY' && now < 20 }">
+		<div>
+		<h3 class="tableHeader"> Weekend</h3>
 			<table>
 				<tr>
 					<th>Prenom</th>
@@ -136,8 +143,11 @@
 				</c:forEach>
 
 			</table>
+			</div>
 		</c:when>
 		<c:otherwise>
+		<div>
+		<h3 class="tableHeader"> Matin</h3>
 			<table>
 				<tr>
 					<th>Prenom</th>
@@ -159,6 +169,9 @@
 				</c:forEach>
 
 			</table>
+			</div>
+			<div>
+			<h3 class="tableHeader"> Soir</h3>
 			<table>
 				<tr>
 					<th>Prenom</th>
@@ -180,6 +193,7 @@
 				</c:forEach>
 
 			</table>
+			</div>
 		</c:otherwise>
 	</c:choose>
 
@@ -189,6 +203,7 @@
 
 <h3>Historique de reservations</h3>
 
+<div>
 <table>
 	<tr>
 		<th>Date</th>

@@ -121,7 +121,7 @@ public class ReservationController {
 			theModel.addAttribute("reservations", reservations);
 			theModel.addAttribute("today",today);
 			theModel.addAttribute("now",now);
-			theModel.addAttribute("name", user.getFirstName());
+			theModel.addAttribute("user", user);
 
 			return "reservation";
 		} else {

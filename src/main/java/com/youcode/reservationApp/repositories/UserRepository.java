@@ -163,9 +163,9 @@ public class UserRepository {
 		
 	}
 	
-    public void sendEmail(Users user) throws MessagingException {
+    public void sendEmail(Users user, String message) throws MessagingException {
 
-        String text = "bonjour";
+        String text = message;
 
         String host = "smtp.gmail.com";
         String to = user.getEmail();

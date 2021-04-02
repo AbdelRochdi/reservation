@@ -10,6 +10,8 @@
 		<th>Role</th>
 		<th>Etat</th>
 		<th>Action</th>
+		<th>Presence</th>
+		<th>Absence</th>
 	</tr>
 
 	<c:forEach items="${ users }" var="user">
@@ -21,32 +23,8 @@
 			<td>${ user.state }</td>
 			<td><a href="activateUser?id=${ user.id }"
 				class="${ user.state == 'active' ? 'disable' : 'enable' }">${ user.state == 'active' ? 'Désactiver' : 'Activer' }</a></td>
-		</tr>
-	</c:forEach>
-
-</table>
-
-<h1>Historique de reservations des utilisateurs</h1>
-
-<!-- <input type="text" placeholder="Search" />
-<input type="submit" value="Search" /> -->
-
-<table>
-	<tr>
-		<th>Prenom</th>
-		<th>Nom</th>
-		<th>Date</th>
-		<th>Type</th>
-		<th>Etat</th>
-	</tr>
-
-	<c:forEach items="${ reservations }" var="reservation">
-		<tr>
-			<td>${ reservation.user.firstName }</td>
-			<td>${ reservation.user.lastName }</td>
-			<td>${ reservation.date }</td>
-			<td>${ reservation.type }</td>
-			<td>${ reservation.state }</td>
+			<td>${ user.userReputation.presence }</td>
+			<td>${ user.userReputation.absence }</td>
 		</tr>
 	</c:forEach>
 

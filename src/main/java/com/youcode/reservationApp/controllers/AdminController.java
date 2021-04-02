@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -67,7 +68,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/activateUser")
-	public String activateUser(Model model, HttpServletRequest request) {
+	public String activateUser(Model model, HttpServletRequest request) throws MessagingException {
 
 		Long userId = Long.valueOf(request.getParameter("id"));
 
@@ -75,8 +76,10 @@ public class AdminController {
 
 		if (user.getState().equals("inactive")) {
 			user.setState("active");
+			userRepository.sendEmail(user,"Ton compte a été activé, vous pouvez vous connecter");
 		} else {
 			user.setState("inactive");
+			userRepository.sendEmail(user,"Votre compte a été désactivé, verifiez avec l'administration");
 		}
 
 		userDao.addUser(user);
@@ -103,7 +106,7 @@ public class AdminController {
 
 		Long reservationId = Long.valueOf(request.getParameter("resid"));
 		Long userId = Long.valueOf(request.getParameter("userid"));
-
+		
 		Reservation reservation = reservationDao.getById(reservationId);
 		String type = reservation.getType();
 
@@ -126,6 +129,7 @@ public class AdminController {
 		}
 
 		reservationRepository.markPresence(reservationId, "present");
+		
 
 		return "redirect:/admin";
 	}
@@ -135,6 +139,8 @@ public class AdminController {
 
 		Long reservationId = Long.valueOf(request.getParameter("resid"));
 		Long userId = Long.valueOf(request.getParameter("userid"));
+		
+		
 
 		Reservation reservation = reservationDao.getById(reservationId);
 		String type = reservation.getType();
@@ -163,6 +169,13 @@ public class AdminController {
 			} else if (type.equals("week-end")) {
 				userRepository.addPresence(userId, 3);
 			}
+		}
+		
+		Users users = userDao.getById(userId);
+		
+		if (users.getUserReputation().getAbsence() >=4) {
+			users.setState("inactive");
+			userDao.addUser(users);
 		}
 
 		reservationRepository.markPresence(reservationId, "absent");

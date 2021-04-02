@@ -55,8 +55,7 @@ public class LoginController {
 		Users users = userRepository.getByEmail(email);
 		
 		if (users != null) {
-			if (BCrypt.checkpw(password, users.getPassword())) {
-				
+			if (BCrypt.checkpw(password, users.getPassword())) {			
 				if (users.getRole().equals("admin")) {
 					session.setAttribute("id", users.getId());
 					session.setAttribute("role", users.getRole());
