@@ -33,6 +33,7 @@
 			<form:errors path="lastName" cssClass="error" />
 			
 			<form:input type="text" path="email" placeholder="Email" />
+			<c:if test="${ !empty messageEmail }"><p class="error">${ messageEmail }</p></c:if>
 			<form:errors path="email" cssClass="error" />
 			
 			<form:input type="hidden" path="role" value="apprenant" />
@@ -40,7 +41,8 @@
 			<form:input type="password" path="password"	placeholder="Mot de passe" />
 			<form:errors path="password" cssClass="error" />
 		
-			<input type="password" placeholder="Confirmez le mot de passe" />
+			<input type="password" name="confirm" placeholder="Confirmez le mot de passe" />
+			<c:if test="${ !empty message }"><p class="error">${ message }</p></c:if>
 			<input type="submit" value="S'inscrire" class="login" style="height: 38px" />
 
 			<h4>OU</h4>

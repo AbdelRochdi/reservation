@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.youcode.reservationApp.entities.Users;
@@ -46,7 +47,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/loginProcess")
-	public String login(HttpServletRequest request, HttpSession session){
+	public String login(HttpServletRequest request, HttpSession session, Model model){
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -66,18 +67,19 @@ public class LoginController {
 						session.setAttribute("role", users.getRole());
 						return "redirect:/reservation";
 					}else {
-						System.out.println("inactive user, check with the administration");
-						return "redirect:/";
+						model.addAttribute("inactifMessage", "Utilisateur inactif, vérifiez avec l'administration");
+						return "index";
 					}
 				}
 			}else {
-				return "redirect:/";
+				model.addAttribute("passIncorrectMessage", "Mot de passe incorrect");
+				return "index";
 			}
 		}else {
-			System.out.println("user doesn't exist");
+			model.addAttribute("noUserMessage", "Cet utilisateur n'existe pas");
+			return "index";
 		}
-		
-		return null;	
+			
 	}
 	
 	@RequestMapping("/logout")

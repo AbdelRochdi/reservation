@@ -174,11 +174,18 @@ public class AdminController {
 	public String users(Model model) {
 
 		List<Users> users = userDao.getAllUsers();
-		List<Reservation> reservations = reservationDao.getAllReservations();
 		model.addAttribute("users", users);
-		model.addAttribute("reservations", reservations);
 
 		return "users";
+	}
+	
+	@RequestMapping("/userHistory")
+	public String userHistory(Model model) {
+
+		List<Reservation> reservations = reservationDao.getAllReservations();
+		model.addAttribute("reservations", reservations);
+
+		return "userHistory";
 	}
 	
 	@RequestMapping("/adminReservations")

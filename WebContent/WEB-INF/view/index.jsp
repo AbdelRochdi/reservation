@@ -21,14 +21,20 @@
 
 
 <section class="loginSection">
-<h2>Inscription Complete veuillez vous connecter pour continuer</h2>
+
+<c:if test="${!empty message }"> <p class="successMessage">${ message }</p> </c:if>
+
 <h1>Connectez-vous </h1>
 
 <form action="loginProcess" method="post" class="form">
 
 <input type="text" name="email"  placeholder="Email" />
+<c:if test="${ !empty noUserMessage }"><p class="error">${ noUserMessage }</p></c:if>
+ 
 
 <input type="password" name="password" placeholder="Password" />
+<c:if test="${ !empty passIncorrectMessage }"><p class="error">${ passIncorrectMessage }</p></c:if>
+<c:if test="${ !empty inactifMessage }"><p class="error">${ inactifMessage }</p></c:if>
 
 <input type="submit" value="Se connecter" style="height: 38px" class="login"/>
 

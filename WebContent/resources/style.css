@@ -25,6 +25,11 @@ h3{
 	margin: 0.5rem 0 1rem;
 }
 
+.reservation-header{
+	margin-bottom: -1rem;
+	font-size: 1rem;
+}
+
 .header {
 	background-color: #283142;
 	display: flex;
@@ -244,4 +249,14 @@ footer {
 	padding: 0.2em 0.7em;
 	color: white;
 	font-size: 0.8rem;
+}
+
+.successMessage{
+	background-color: green;
+	border-radius: 0.6em;
+	padding: 0.2em 0.7em;
+	color: white;
+	font-size: 0.8rem;
+	width: 80%;
+	margin: 0 auto;
 }

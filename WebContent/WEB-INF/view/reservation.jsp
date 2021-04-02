@@ -30,30 +30,35 @@
 
 
 <c:if test="${ now >= 9 &&  now < 20 }">
-<h3>Voulez vous reservez pour ajourd'hui ?</h3>
+<h3>Voulez vous reservez pour demain ?</h3>
 <section class="makeRes">
 <c:choose>
 	<c:when test="${today == 'SATURDAY' || today == 'FRIDAY'}">
+	<div>
+		<h4 class="reservation-header">De 9h à 20h</h4><br />
 		<c:choose>
 			<c:when test="${ empty weekend.type }">
 				<form action="makeReservation" method="post">
 					<input type="hidden" name="type" value="week-end" /> <input
-						type="submit" value="Réserver" class="limiter" style="padding: 0.4rem; margin: 0.4rem"
+						type="submit" value="Réserver le week-end" class="limiter" style="padding: 0.4rem; margin: 0.4rem"
 						onclick="if (!(confirm('Etes-vous sur de vouloir resérver ?'))) return false" />
 				</form>
 			</c:when>
 			<c:otherwise>
 				<form action="cancelReservation" method="post">
 					<input type="hidden" name="type" value="week-end" /> <input
-						type="submit" value="Annuler" class="annuler" style="padding: 0.4rem; margin: 0.4rem"
+						type="submit" value="Annuler le week-end" class="annuler" style="padding: 0.4rem; margin: 0.4rem"
 						onclick="if (!(confirm('Etes-vous sur de vouloir annuler ?'))) return false" />
 				</form>
 			</c:otherwise>
 		</c:choose>
+	</div>
 	</c:when>
 
 	<c:otherwise>
 	<div class="resChoices">
+	<div>
+	<h4 class="reservation-header">De 9h à 17h</h4><br />
 		<c:choose>
 			<c:when test="${ empty matin.type }">
 				<form action="makeReservation" method="post">
@@ -70,6 +75,9 @@
 				</form>
 			</c:otherwise>
 		</c:choose>
+	</div>
+	<div>
+	<h4 class="reservation-header">De 17h à 20h</h4><br />
 		<c:choose>
 			<c:when test="${ empty soir.type  }">
 				<form action="makeReservation" method="post">
@@ -86,6 +94,7 @@
 				</form>
 			</c:otherwise>
 		</c:choose>
+		</div>
 		</div>
 	</c:otherwise>
 </c:choose>

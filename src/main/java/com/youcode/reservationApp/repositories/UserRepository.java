@@ -3,7 +3,13 @@ package com.youcode.reservationApp.repositories;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import javax.mail.*;
 
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
@@ -156,5 +162,37 @@ public class UserRepository {
 		session.saveOrUpdate(user);
 		
 	}
+	
+    public void sendEmail(Users user) throws MessagingException {
+
+        String text = "bonjour";
+
+        String host = "smtp.gmail.com";
+        String to = user.getEmail();
+        String username = "youcode.absence@gmail.com";
+        String password = "youcode2021";
+
+        Properties prpos = System.getProperties();
+        prpos.put("mail.smtp.auth", true);
+        prpos.put("mail.smtp.starttls.enable", true);
+        prpos.put("mail.smtp.host", host);
+        prpos.put("mail.smtp.port", "587");
+
+        javax.mail.Session session = javax.mail.Session.getDefaultInstance(prpos, new javax.mail.Authenticator(){
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        MimeMessage m = new MimeMessage(session);
+        m.setFrom(new InternetAddress(username));
+        m.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress((to)));
+        m.setSubject("Identifiant et mot de passe pour l'application de gestion d'absences");
+        m.setText(text);
+
+        Transport.send(m);
+        System.out.println("Message sent");
+    }
 	
 }

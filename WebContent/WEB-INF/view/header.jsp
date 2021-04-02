@@ -20,6 +20,7 @@
 			<li><a href="admin">Liste Active</a></li>
 			<li><a href="adminReservations">Reservations</a></li>
 			<li><a href="users">Utilisateurs</a></li>
+			<li><a href="userHistory">Historique des utilisateurs</a></li>
 			<li><a href="logout" class="logout">Se Déconnecter</a></li>
 		</ul>
 
