@@ -31,7 +31,6 @@ public class RegisterController {
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
@@ -72,8 +71,9 @@ public class RegisterController {
 			}else {
 
 				String hashed = BCrypt.hashpw(users.getPassword(), BCrypt.gensalt(12));
-
+				String lower = users.getEmail().toLowerCase();
 				users.setPassword(hashed);
+				users.setEmail(lower);
 
 				Long idLong = userDao.addUser(users);
 

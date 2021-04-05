@@ -49,7 +49,7 @@ public class LoginController {
 	@RequestMapping("/loginProcess")
 	public String login(HttpServletRequest request, HttpSession session, Model model){
 		
-		String email = request.getParameter("email");
+		String email = request.getParameter("email").toLowerCase();
 		String password = request.getParameter("password");
 		
 		Users users = userRepository.getByEmail(email);
