@@ -25,9 +25,9 @@
 
 	</header>
 
-<c:if test="${ now < 9 &&  now >= 20 }">
+<c:if test="${ now < 9 || now >= 20 }">
 
-	<h3>Fin des réservations pour ajourd'hui, revenez demain ?</h3>
+	<h1 class="finRes">Fin des réservations pour ajourd'hui, revenez demain </h1>
 
 </c:if>
 

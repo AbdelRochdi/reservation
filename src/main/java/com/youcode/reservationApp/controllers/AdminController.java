@@ -37,12 +37,12 @@ public class AdminController {
 	private ReservationRepository reservationRepository;
 
 	
-
+	/* this method shows the admin first page, adds the attributes needed to show reservations
+	 * and redirects non admin users to their pages
+	 * */
 	@RequestMapping("/admin")
 	public String showAdmin(Model model, HttpSession session) {
 		if (session.getAttribute("role") != null && session.getAttribute("role").equals("admin")) {
-
-			
 
 			List<Reservation> todayMatinActiveReservations = reservationRepository
 					.getAllActiveReservationsToday("matin");
@@ -52,14 +52,12 @@ public class AdminController {
 			
 			String today = LocalDate.now().getDayOfWeek().name();
 
-
 			model.addAttribute("todayMatinActiveReservations", todayMatinActiveReservations);
 			model.addAttribute("todaySoirActiveReservations", todaySoirActiveReservations);
 			model.addAttribute("todayWeekendActiveReservations", todayWeekendActiveReservations);
 
 			model.addAttribute("today",today);
 			
-
 			return "admin";
 		} else {
 			return "redirect:/";
@@ -67,6 +65,9 @@ public class AdminController {
 
 	}
 
+	/* this method activates the user if he's inactive and vice-versa
+	 * */
+	
 	@RequestMapping("/activateUser")
 	public String activateUser(Model model, HttpServletRequest request) throws MessagingException {
 
@@ -87,6 +88,8 @@ public class AdminController {
 		return "redirect:/users";
 	}
 
+	/* this method adds a reservation limit or updates an existing one
+	 * */
 	@RequestMapping("/setLimit")
 	public String setDailyLimit(Model model, HttpServletRequest request) {
 
@@ -100,6 +103,9 @@ public class AdminController {
 
 		return "redirect:/adminReservations";
 	}
+	
+	/* this method marks the presence of the user in the current day, if he's present it adds presence points
+	 * */
 
 	@RequestMapping("/markPresent")
 	public String markPresent(Model model, HttpServletRequest request) {
@@ -134,6 +140,9 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 
+	/* this method marks the absence of the user in the current day, if he's absence it adds presence points
+	 * and absence points to penalize the absent user in the next reservations
+	 * */
 	@RequestMapping("/markAbsent")
 	public String markAbsent(Model model, HttpServletRequest request) {
 

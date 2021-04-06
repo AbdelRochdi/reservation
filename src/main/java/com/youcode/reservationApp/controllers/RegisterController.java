@@ -35,7 +35,6 @@ public class RegisterController {
 	}
 
 	// controller method to show the registration form
-
 	@RequestMapping("/register")
 	public String registrationFrom(Model theModel) {
 
@@ -46,7 +45,10 @@ public class RegisterController {
 		return "register";
 	}
 
-	// controller method to process the registration form
+	
+	/* this method processes the registration process, and adds validation for cases not covered by hibernate-validator
+	 * it sets the email to lowerCase for future uses, and hashes the password before inserting in the database
+	 * */
 	@RequestMapping("/processForm")
 	public String processFrom(@Valid @ModelAttribute("users") Users users, BindingResult thBindingResult,
 			HttpServletRequest request, Model model) throws MessagingException {

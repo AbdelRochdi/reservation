@@ -188,7 +188,7 @@ public class UserRepository {
         MimeMessage m = new MimeMessage(session);
         m.setFrom(new InternetAddress(username));
         m.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress((to)));
-        m.setSubject("Identifiant et mot de passe pour l'application de gestion d'absences");
+        m.setSubject("Application de reservation en ligne YouCode");
         m.setText(text);
 
         Transport.send(m);

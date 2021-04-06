@@ -34,9 +34,11 @@ public class ReservationController {
 	@Autowired
 	private UserDao userDao;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
+	/* this method is the reservation filter, first of all it sorts the reservation array by date to make sure it 
+	 * gives priority to the first one to make a reservation, then it compares the presence points of the users,
+	 * and validates those with the lowest points as long as there are places, this comparison is only effective if the
+	 * reservations are superior than the current day's reservation limit
+	 * */
 	public void reservationConfirmation(List<Reservation> todayReservations, ReservationLimit todayReservationLimit) {
 		todayReservations.sort(Comparator.comparing(Reservation::getDate));
 		int i = 0;
@@ -74,7 +76,6 @@ public class ReservationController {
 
 
 	// controller method to show the reservation page
-
 	@RequestMapping("/reservation")
 	public String reservationPage(Model theModel, HttpSession session) {
 		if (session.getAttribute("role") != null && session.getAttribute("role").equals("apprenant")) {
@@ -87,6 +88,7 @@ public class ReservationController {
 
 			reservations = reservationRepository.getAllReservationsById(userId);
 			
+			// those two date methods are used to organize the jsp, it shows different data according to date and time
 			String today = LocalDate.now().getDayOfWeek().name();
 			int now = LocalDateTime.now().getHour();
 			
@@ -130,7 +132,8 @@ public class ReservationController {
 
 	}
 
-	// controller method to process the reservation request
+	/* this method makes the reservation of current day + 1
+	 * */
 	@RequestMapping("/makeReservation")
 	public String makeReservation(Model theModel, HttpSession session, HttpServletRequest request) {
 
@@ -138,8 +141,6 @@ public class ReservationController {
 		String type = request.getParameter("type");
 		
 		reservationDao.addReservation(userId,type);
-		
-		
 		
 		List<Reservation> todayMatinReservations = reservationRepository.getAllReservationsTodayByType("matin");
 		List<Reservation> todaySoirReservations = reservationRepository.getAllReservationsTodayByType("soir");
@@ -156,6 +157,8 @@ public class ReservationController {
 		return "redirect:/reservation";
 	}
 	
+	/* this method cancels the reservation of current day + 1
+	 * */
 	@RequestMapping("/cancelReservation")
 	public String cancelReservation(Model theModel, HttpSession session, HttpServletRequest request) {
 

@@ -18,6 +18,8 @@ public class LoginController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	/* this method shows the login page or redirects each role to its respective page if the user is already logged in
+	 * */
 	@RequestMapping("/")
 	public String showPage(HttpSession session) {
 		
@@ -32,6 +34,8 @@ public class LoginController {
 		}
 	}
 	
+	/* this method is a duplicate of the previous one because it's needed to solve a bug ^^'
+	 * */
 	@RequestMapping("/home")
 	public String homePage(HttpSession session) {
 		
@@ -46,6 +50,8 @@ public class LoginController {
 		}
 	}
 	
+	/* this method processes the login operation, it decrypts the password and redirects each role to its respective page
+	 * */
 	@RequestMapping("/loginProcess")
 	public String login(HttpServletRequest request, HttpSession session, Model model){
 		
@@ -81,6 +87,8 @@ public class LoginController {
 			
 	}
 	
+	/* this method logs the user out and redirects to the login page
+	 * */
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
